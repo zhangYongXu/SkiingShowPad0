@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        android:id="@+id/inTitle"
+        layout="@layout/layout_top_navigation" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inTitle"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="345dp">
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000">
+                        <TableRow
+                            android:layout_weight="1">
+
+                            <ImageButton
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="#00000000"
+                                android:scaleType="fitXY"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/home_buttom_item_tong_yong_shuang"
+                                android:onClick="homeToListButtonErTongShuangClicked"/>
+                            <ImageButton
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="#00000000"
+                                android:scaleType="fitXY"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/home_buttom_item_er_tong_shuang"
+                                android:onClick="homeToListButtonChengRenShuangClicked"/>
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_weight="1">
+                            <ImageButton
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="#00000000"
+                                android:scaleType="fitXY"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/home_buttom_item_er_tong_dan"
+                                android:onClick="homeToListButtonErTongDanClicked" />
+                            <ImageButton
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="#00000000"
+                                android:scaleType="fitXY"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/home_buttom_item_tong_yong_dan"
+                                android:onClick="homeToListButtonChengRenDanClicked"/>
+
+                        </TableRow>
+                    </TableLayout>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/activity_home_more_content"/>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="10dp">
+                    <ImageView
+                        android:id="@+id/bImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/activity_home_hua_xue_zhi_shi_da_jiang_tang"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/backBottomLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="55dp"-->
+        <!--android:layout_alignParentBottom="true">-->
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:src="@mipmap/list_activity_back_button_bg"-->
+            <!--android:scaleType="fitEnd" />-->
+        <!--<ImageButton-->
+            <!--android:layout_width="45dp"-->
+            <!--android:layout_height="45dp"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:paddingBottom="8dp"-->
+            <!--android:paddingTop="8dp"-->
+            <!--android:paddingRight="8dp"-->
+            <!--android:paddingLeft="8dp"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:src="@drawable/list_back_button"-->
+            <!--android:onClick="backButtonClicked"-->
+            <!--android:background="#00000000"/>-->
+    <!--</RelativeLayout>-->
+</RelativeLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="trans">#01ffffff</color>
+    <color name="trans_gray">#55888888</color>
+    <color name="trans_white">#55F9F9F9</color>
+    <color name="trans_white2">#55FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="red">#FFDC3F31</color>
+
+    <color name="text_normal">#FF818181</color>
+    <color name="text_checked">#FF010102</color>
+    <color name="gray_search_bg">#FFDDDDDD</color>
+    <color name="gray_ling">#FFCECECE</color>
+    <color name="gray_page3_radiobg">#FF666666</color>
+    <color name="grow_line_color">#FF5898D3</color>
+    <color name="search_main">#FFEAA02D</color>
+    <color name="login_clause">#aba7a2</color>
+
+    <color name="appTopNavigationViewBgColor">#0f2e71</color>
+
+    <color name="activity_detial_fold_type_btn_selected_bg_color">#00143e</color>
+    <color name="activity_detial_fold_type_btn_normal_bg_color">#b6b6b6</color>
+
+    <color name="SimpleVideoPlayViewPrograssColor">#aba7a2</color>
+
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/list_activity_item_bg"/>
+
+                <cn.geeksworld.skiingshow.views.MyImageViewRoundOval
+                    android:id="@+id/itemShowImageView"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="35dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/acticity_list_logo"/>
+
+
+                <TextView
+                    android:id="@+id/itemTitleTextView"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="220dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="标题"
+                    android:textSize="@dimen/textSize30"
+                    android:textColor="#54afc5"
+                    android:lines="2"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+
+
+
+</RelativeLayout>

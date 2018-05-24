@@ -1,0 +1,294 @@
+<resources>
+    <string name="app_name">滑雪</string>
+
+    <string name="activity_detail_text_title1">课程介绍</string>
+    <string name="activity_detail_text_title2">动作要领</string>
+    <string name="activity_detail_text_title3">错误动作</string>
+
+
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="classify">分类</string>
+    <string name="next">下一步</string>
+    <string name="pay">立即支付</string>
+    <string name="complete">完成</string>
+    <string name="nick">昵称</string>
+    <string name="sex">性别</string>
+    <string name="birthday">出生日期</string>
+    <string name="birthday_tip">(阳历)</string>
+    <string name="edu">学历</string>
+    <string name="job">行业</string>
+    <string name="interest">兴趣</string>
+    <string name="address">配送地址</string>
+    <string name="share">分享</string>
+    <string name="collect">收藏</string>
+    <string name="visits">浏览</string>
+    <string name="delete">删除</string>
+    <string name="allSelect">全选</string>
+    <string name="budget">结算</string>
+    <string name="search">搜索</string>
+    <string name="transInfo">配送信息</string>
+    <string name="transTax">关税:</string>
+    <string name="transCarriage">快递:</string>
+    <string name="payMethod">支付方式</string>
+    <string name="payOnline">选择支付方式</string>
+    <string name="manage">管理</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+    <string name="completeInfo">请完善信息</string>
+    <string name="edit">编辑</string>
+    <string name="submit">提交</string>
+    <string name="choice_picture">选择照片</string>
+    <string name="more">更多</string>
+    <string name="intro">简介</string>
+    <string name="live">直播</string>
+    <string name="hots">人气:</string>
+    <string name="buy">购买</string>
+    <string name="rmb">¥</string>
+    <string name="filtrate">筛选</string>
+    <string name="brand">品牌</string>
+    <string name="reset">重置</string>
+    <string name="quantity">数量</string>
+    <string name="color">颜色</string>
+    <string name="model">型号</string>
+    <string name="buyNow">立即购买</string>
+    <string name="multiply">×</string>
+    <string name="about">关于臻十</string>
+    <string name="unLogin">未登录</string>
+    <string name="exitLogin">退出登录</string>
+    <string name="freight_charge">运费:</string>
+    <string name="visited">关注:</string>
+    <string name="like">点赞</string>
+    <string name="loginFirst">请先登录！</string>
+    <string name="hint_click">点击设置</string>
+    <string name="hint_input">请填写</string>
+    <string name="detail">详情</string>
+    <string name="agreed">已同意</string>
+    <string name="unknown">未获取到信息</string>
+    <string name="buffer">缓冲中...</string>
+    <string name="skip">跳过</string>
+    <string name="clearCache">清除缓存</string>
+    <string name="copy">复制</string>
+
+    <string name="hint_phone">手机号</string>
+    <string name="hint_pass">密码为六到十六位字符，数字或字母</string>
+    <string name="hint_code">短信验证码</string>
+    <string name="hint_getCode">获取验证码</string>
+    <string name="hint_codeRe">重新获取</string>
+
+    <string name="toast_phone">请输入手机号</string>
+    <string name="toast_pass">请输入密码</string>
+    <string name="toast_verify">密码输入不一致</string>
+    <string name="toast_code">请获取验证码</string>
+    <string name="toast_phone_v">请输入正确的手机号</string>
+
+    <string name="login_register">注册账号</string>
+    <string name="login_forgetPass">忘记密码？</string>
+    <string name="login_phone_register">手机注册</string>
+    <string name="login_three">第三方账号直接登录</string>
+    <string name="login_clause"><u>用户协议</u></string>
+    <string name="login_clause2">用户协议</string>
+    <string name="login_secret"><u>隐私保护</u></string>
+    <string name="login_secret2">隐私保护</string>
+    <string name="login_bind">绑定手机号</string>
+    <string name="login_binded">该手机号在系统中已注册过，可直接关联手机号</string>
+
+    <string name="forgot_pass_phone">请输入注册手机号</string>
+    <string name="forgot_pass_pass0">输入密码</string>
+    <string name="forgot_pass_pass1">确认密码</string>
+    <string name="forgot_pass_title0">忘记密码</string>
+    <string name="forgot_pass_title1">设置密码</string>
+
+    <string name="main_radio0">首页</string>
+    <string name="main_radio1">想法</string>
+    <string name="main_radio2">市场</string>
+    <string name="main_radio3">唐卡</string>
+    <string name="main_radio4">我的</string>
+
+    <string name="page1_today">每日推荐</string>
+    <string name="page1_show">大咖秀</string>
+    <string name="page1_zhpower">中国力量</string>
+    <string name="page1_worldgene">世界基因</string>
+    <string name="page1_item5">精英范儿</string>
+    <string name="page1_frag_video0">最新视频</string>
+    <string name="page1_frag_video1">最热视频</string>
+    <string name="page1_frag_video2">我的关注</string>
+    <string name="page1_frag_live0">最新直播</string>
+    <string name="page1_frag_live1">最热直播</string>
+    <string name="page1_frag_live2">我的关注</string>
+
+    <string name="page1_play_count">播放量:</string>
+    <string name="page1_play_time">发布时间:</string>
+    <string name="page1_play_guest">本期嘉宾</string>
+    <string name="page1_play_intro">嘉宾介绍</string>
+    <string name="page1_play_name">中文名(外文名)</string>
+    <string name="page1_play_country">国籍</string>
+    <string name="page1_play_job">职业</string>
+    <string name="page1_play_finish">主要成就</string>
+
+    <string name="page0_choice">精选推送</string>
+    <string name="page0_goods">产品系列</string>
+    <string name="page2_recommend">推荐内容</string>
+    <string name="page2_buy_recommend">相关推荐</string>
+
+    <string name="page3_mood">木</string>
+    <string name="page3_fire">火</string>
+    <string name="page3_soil">土</string>
+    <string name="page3_gold">金</string>
+    <string name="page3_water">水</string>
+    <string name="page3_goods_classify">商品分类</string>
+    <string name="page3_goods_list_default">默认排序</string>
+    <string name="page3_goods_list_sale">销量排序</string>
+    <string name="page3_goods_list_visits">浏览排序</string>
+    <string name="page3_goods_list_pop1">价格区间(元)</string>
+
+    <string name="page4_grow_tip">首页签到开启成长</string>
+    <string name="page4_wait_estimate">待评价</string>
+    <string name="page4_order">我的创作</string>
+    <string name="page4_server">客服</string>
+    <string name="page4_account">我的账户</string>
+    <string name="page4_collect">我的特权</string>
+    <string name="page4_grow">成长</string>
+    <string name="page4_group">社群</string>
+    <string name="page4_settings">系统设置</string>
+    <string name="page4_recommend">推荐给老友</string>
+    <string name="page4_collect0">视频</string>
+    <string name="page4_collect1">音频</string>
+    <string name="page4_collect2">商品</string>
+    <string name="page4_collect3">文章</string>
+    <string name="page4_person">个人资料</string>
+    <string name="page4_collect_visited">浏览量:</string>
+    <string name="page4_collect_sell">销量:</string>
+    <string name="page4_collect_long">时长:</string>
+    <string name="page4_collect_time">活动时间:</string>
+    <string name="page4_collect_address">活动地点:</string>
+    <string name="page4_order0">全部</string>
+    <string name="page4_order1">待付款</string>
+    <string name="page4_order2">待收货</string>
+    <string name="page4_order3">已完成</string>
+    <string name="page4_mine_person">保存修改</string>
+
+    <string name="add_receiveAddr_title">新增收货地址</string>
+    <string name="add_receiveAddr_title2">修改收货地址</string>
+    <string name="add_receiveAddr_sub">保存并使用</string>
+    <string name="add_receiveAddr_receiver">收货人</string>
+    <string name="add_receiveAddr_phone">请输入您的手机号码</string>
+    <string name="add_receiveAddr_province">省、市、区</string>
+    <string name="add_receiveAddr_detail">详细地址</string>
+    <string name="add_receiveAddr_postcode">邮政编码</string>
+    <string name="add_receiveAddr_default">设为默认</string>
+
+    <string name="cart_recommend">推荐商品</string>
+    <string name="cart_title">购物车</string>
+    <string name="cart_empty">\t购物车是空的！</string>
+    <string name="search_history">历史记录</string>
+    <string name="article_detail">文章详情</string>
+
+    <string name="order_pay_success">订单支付成功</string>
+    <string name="order_pay_btn">再去逛逛</string>
+    <string name="order_total">合计:</string>
+    <string name="order_detail">订单详情</string>
+    <string name="order_sub">提交订单</string>
+    <string name="order_title">确认订单</string>
+    <string name="order_num">订单编号:</string>
+    <string name="order_time">下单时间:</string>
+    <string name="order_state0">已支付</string>
+    <string name="order_invoice_choice">是否索要发票</string>
+    <string name="order_invoice_choice1">填写发票信息</string>
+    <string name="order_invoice_tip">请填写发票信息</string>
+    <string name="order_invoice_title">发票信息</string>
+    <string name="order_invoice_type">发票类型</string>
+    <string name="order_invoice_type0">发票类型:</string>
+    <string name="order_invoice_type1">普通发票</string>
+    <string name="order_invoice_head">发票抬头</string>
+    <string name="order_invoice_head0">发票抬头:</string>
+    <string name="order_invoice_numb0">纳税人识别号:</string>
+    <string name="order_invoice_single">个人</string>
+    <string name="order_invoice_company">公司</string>
+    <string name="order_invoice_name">单位名称</string>
+    <string name="order_invoice_numb">纳税人识别号</string>
+    <string name="order_invoice_goods">商品类型</string>
+    <string name="order_confirm_receive">确认收货</string>
+    <string name="order_cancel">取消订单</string>
+    <string name="order_wait_pay">等待付款</string>
+    <string name="order_wait_time">剩余时间:</string>
+    <string name="order_wait_money">需付款:¥</string>
+    <string name="order_price_total">商品总额</string>
+    <string name="order_price_charge">+运费</string>
+    <string name="order_price_true">实付款:</string>
+    <string name="order_trans_type">配送方式:</string>
+    <string name="order_trans_type1">配送方式</string>
+    <string name="order_trans_numb">快递单号:</string>
+    <string name="order_trans_numb1">快递单号</string>
+    <string name="order_trans_title">物流查询</string>
+    <string name="order_trans_btn">物流信息</string>
+
+    <string name="address_default">默认收货地址</string>
+    <string name="address_list_title">选择收货地址</string>
+    <string name="address_pop">地址选择</string>
+    <string name="headIcon_title">头像设置</string>
+    <string name="everyday_sign">每日一签</string>
+    <string name="everyday_recong">开启今日运程</string>
+    <string name="everyday_sign_tip0">每天成长(提升运势)</string>
+    <string name="everyday_sign_tip1">成长开启</string>
+    <string name="everyday_sign_tip2">十大维度,每天成长,提升运势</string>
+    <string name="everyday_sign_item0">自我</string>
+    <string name="everyday_sign_item1">视野</string>
+    <string name="everyday_sign_item2">消费</string>
+    <string name="everyday_sign_item3">人脉</string>
+    <string name="everyday_sign_item4">财富</string>
+    <string name="everyday_sign_item5">生命</string>
+    <string name="everyday_sign_item6">社会</string>
+    <string name="everyday_sign_item7">婚姻</string>
+    <string name="everyday_sign_item8">家庭</string>
+    <string name="everyday_sign_item9">传承</string>
+    <string name="search_empty">未找到相关内容</string>
+    <string name="search_recommend">开运吉祥物</string>
+    <string name="search_tip">查找指定内容</string>
+    <string name="search_main0">嘉宾</string>
+
+    <string name="share_to">分享至</string>
+    <string name="share_unInstall_wx">未安装微信</string>
+    <string name="share_unInstall_qq">未安装QQ</string>
+    <string name="item_detail_audio">发布音频</string>
+    <string name="item_detail_video">发布视频</string>
+    <string name="item_detail_goods">推荐商品</string>
+
+    <string name="goods_detail_none">暂时无货</string>
+    <string name="goods_detail_title">商品详情</string>
+    <string name="goods_detail_address">配送地点</string>
+    <string name="goods_detail_attr">商品属性(类别/型号/颜色)</string>
+    <string name="goods_detail_attr_hint">尺寸/颜色</string>
+    <string name="goods_detail_add">加入购物车</string>
+    <string name="goods_numb">产品编号:</string>
+    <string name="goods_brand">品牌介绍</string>
+    <string name="company_name">蜂巢汇有限公司</string>
+
+    <string name="grow_title">成长曲线</string>
+    <string name="grow_value">今日成长值</string>
+    <string name="grow_luck">今日运程</string>
+    <string name="grow_treasure">臻十成长·财富</string>
+    <string name="grow_treasure_intro">每天成长,学会并养成"生财、理财、投资"之道和习惯发现"你一直想要的项目"。</string>
+    <string name="grow_self">臻十成长·自我</string>
+    <string name="grow_self_intro">每天成长,养成"个人品牌、独特品味、职场实力",通晓"创业真相",精炼"生活能力"。</string>
+    <string name="grow_medal">勋章墙</string>
+    <string name="grow_medal_time">获取时间</string>
+    <string name="grow_medal_pop">获得勋章</string>
+
+    <string name="audio_list">播放列表</string>
+    <string name="face_success">识别成功</string>
+    <string name="face_result">识别结果</string>
+    <string name="pay_type0">请选择配送方式</string>
+    <string name="pay_type1">请选择支付方式</string>
+    <string name="pay_go">去支付</string>
+    <string name="pay_success">支付成功</string>
+    <string name="set_tip0">臻十GENTREE</string>
+    <string name="set_tip1">成长美学,臻十自在</string>
+    <string name="about_tip0">联系我们\n\n官方微信:\t臻十Gentree</string>
+    <string name="about_tip1">臻十APP，是臻十线上线下平台的一部分，提供中国新中产品牌孵化与精英进阶服务，这里俯瞰人生，规划进阶，体验成长美学。你可以臻十获得：
+\n《臻十问》：快速读取精英人生；
+\n《臻话堂》：深度解读行业技能；
+\n《臻选人》：全球顶级KOL带你体验独特生活方式。</string>
+
+
+</resources>
