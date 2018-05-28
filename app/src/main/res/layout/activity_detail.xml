@@ -35,7 +35,7 @@
             <ImageView
                 android:id="@+id/detailTypeBgImageView"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="150dp"
                 android:src="@mipmap/detail_type_bg_blue"
                 android:scaleType="fitXY" />
             <LinearLayout
@@ -108,34 +108,27 @@
                 android:layout_below="@+id/typeButtonLayout">
                 <ImageView
                     android:id="@+id/mainVideoImageView"
-                    android:layout_width="130dp"
-                    android:layout_height="100dp"
+                    android:layout_width="170dp"
+                    android:layout_height="97dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:scaleType="fitStart"
-                    android:background="#00ffee"/>
-                <HorizontalScrollView
-                    android:id="@+id/zhengQueHorizontalScrollView"
+                    android:scaleType="fitStart" />
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp" >
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:layout_margin="5dp" >
-
-                        <GridView
-                            android:id="@+id/zhengQueGrid"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:gravity="center"
-                            android:numColumns="auto_fit"
-                            android:stretchMode="spacingWidthUniform" >
-                        </GridView>
-                    </LinearLayout>
-                </HorizontalScrollView>
+                    android:layout_margin="10dp" >
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/zhengQueRecycleView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/cuoWuRecycleView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"/>
+                </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
         <LinearLayout

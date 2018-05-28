@@ -65,15 +65,15 @@ public class HomeActivity extends AppCompatActivity {
     }
     //儿童双板
     public void homeToListButtonChengRenShuangClicked(View view){
-        toListActivity(ListTypeErTongShuang);
+        //toListActivity(ListTypeErTongShuang);
     }
     //儿童单板
     public void homeToListButtonErTongDanClicked(View view){
-        toListActivity(ListTypeErTongDan);
+        //toListActivity(ListTypeErTongDan);
     }
     //通用单板
     public void homeToListButtonChengRenDanClicked(View view){
-        toListActivity(ListTypeTongYongDan);
+        //toListActivity(ListTypeTongYongDan);
     }
 
 

@@ -86,29 +86,31 @@ public class MainActivity extends AppCompatActivity {
 //        datas_banner.add("http://bmob-cdn-5476.b0.upaiyun.com/2017/10/25/848e8f4740dd4457807bea6a26d2e5a5.png");
 //        datas_banner.add("http://bmob-cdn-5476.b0.upaiyun.com/2017/10/25/e937864240528fff80f8eef60cd58052.png");
         int[] headerRes={
-                R.mipmap.b1,
-                R.mipmap.b2,
-                R.mipmap.b3,
-                R.mipmap.b4,
-                R.mipmap.b5,
-                R.mipmap.b6,
-                R.mipmap.b7,
-                R.mipmap.b8,
-                R.mipmap.b9
+                R.mipmap.banner1,
+                R.mipmap.banner2,
+                R.mipmap.banner3,
+                R.mipmap.banner4,
+                R.mipmap.banner5,
+                R.mipmap.banner6,
+                R.mipmap.banner7,
+                R.mipmap.banner8,
+                R.mipmap.banner9,
+                R.mipmap.banner10
         };
         adapter_vp_header = new MyLLocalPagerAdapter(viewPagerHeader, this, headerRes);
         viewPagerHeader.setAdapter(adapter_vp_header);
 
         int[] footerRes={
-                R.mipmap.t1,
-                R.mipmap.t2,
-                R.mipmap.t3,
-                R.mipmap.t4,
-                R.mipmap.t5,
-                R.mipmap.t6,
-                R.mipmap.t7,
-                R.mipmap.t8,
-                R.mipmap.t9
+                R.mipmap.banner1,
+                R.mipmap.banner2,
+                R.mipmap.banner3,
+                R.mipmap.banner4,
+                R.mipmap.banner5,
+                R.mipmap.banner6,
+                R.mipmap.banner7,
+                R.mipmap.banner8,
+                R.mipmap.banner9,
+                R.mipmap.banner10
         };
         adapter_vp_Footer = new MyLLocalPagerAdapter(viewPagerFooter, this, footerRes);
         viewPagerFooter.setAdapter(adapter_vp_Footer);

@@ -69,7 +69,7 @@ public class ShareKey {
 
 
     //是否使用测试图片 视频 该模式下 方便手机调试 ，在大屏安装时 要关闭这个
-    public static final boolean TestImageAndVideo = true;
+    public static final boolean TestImageAndVideo = false;
 
     /*
     * 讯飞人脸识别

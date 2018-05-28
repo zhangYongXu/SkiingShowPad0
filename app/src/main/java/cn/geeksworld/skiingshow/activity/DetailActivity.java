@@ -14,6 +14,8 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +52,7 @@ import cn.geeksworld.skiingshow.Tools.AppModelControlManager;
 import cn.geeksworld.skiingshow.Tools.ShareKey;
 import cn.geeksworld.skiingshow.Tools.Tool;
 import cn.geeksworld.skiingshow.adapter.MyGridViewAdapter;
+import cn.geeksworld.skiingshow.adapter.RecyclerViewVideoItemAdapter;
 import cn.geeksworld.skiingshow.model.MainVideoModel;
 import cn.geeksworld.skiingshow.model.SkiingModel;
 import cn.geeksworld.skiingshow.model.VideoModel;
@@ -81,27 +84,24 @@ public class DetailActivity extends AppCompatActivity{
     private List<VideoModel> zqVideoList = new ArrayList<VideoModel>();
     private VideoModel currentVideoModel;
 
+    private RecyclerView zhengQueRecycleView;
+    private RecyclerViewVideoItemAdapter zhengQueItemAdapter;
 
-    private GridView gridView;
-    private MyGridViewAdapter gridViewAdapter;
-    private HorizontalScrollView zhengQueHorizontalScrollView;
+    private RecyclerView cuoWuRecycleView;
+    private RecyclerViewVideoItemAdapter cuoWuItemAdapter;
+
+
 
 
     private ImageButton typeZhengQueImageButton;
     private ImageButton typeCuoWuImageButton;
     private ImageView typeBgImageView;
 
-    //private Button fold1BigButton;
-    //private Button fold2BigButton;
-    //private Button fold3BigButton;
 
-    //private ImageView fold1FlagImageView;
-    //private ImageView fold2FlagImageView;
-    //private ImageView fold3FlagImageView;
 
     private TextView fold1TextView;
     private TextView fold2TextView;
-    //private TextView fold3TextView;
+
 
     private LongTouchBtn appControlBarBtn;
 
@@ -129,7 +129,7 @@ public class DetailActivity extends AppCompatActivity{
 
         initView();
 
-        initZhengQueGridView();
+        initRecycleView();
 
         setFoldTextView();
 
@@ -194,6 +194,10 @@ public class DetailActivity extends AppCompatActivity{
         play_bg = videoView.findViewById(R.id.play_bg);
         videoContainer = (RelativeLayout) findViewById(R.id.videoContainer);
 
+        zhengQueRecycleView = (RecyclerView)findViewById(R.id.zhengQueRecycleView);
+
+        cuoWuRecycleView = (RecyclerView)findViewById(R.id.cuoWuRecycleView);
+
         DisplayMetrics dm = getResources().getDisplayMetrics();
         float height = dm.heightPixels;
         float width = dm.widthPixels;
@@ -231,37 +235,14 @@ public class DetailActivity extends AppCompatActivity{
 
 
 
-        gridView = (GridView) findViewById(R.id.zhengQueGrid);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                VideoModel videoModel  = (VideoModel) adapterView.getAdapter().getItem(i);
-                currentVideoModel = videoModel;
-                selectVideoHandle();
-            }
-        });
-
-        zhengQueHorizontalScrollView =  (HorizontalScrollView) findViewById(R.id.zhengQueHorizontalScrollView);
 
         typeZhengQueImageButton = (ImageButton) findViewById(R.id.typeZhengQueImageButton);
         typeCuoWuImageButton = (ImageButton) findViewById(R.id.typeCuoWuImageButton);
         typeBgImageView = (ImageView)findViewById(R.id.detailTypeBgImageView);
 
-        //fold1BigButton = (Button)findViewById(R.id.fold1BigButton);
-        //fold2BigButton = (Button)findViewById(R.id.fold2BigButton);
-        //fold3BigButton = (Button)findViewById(R.id.fold3BigButton);
-
-        //fold1BigButton.setSelected(true);
-        //fold2BigButton.setSelected(true);
-        //fold3BigButton.setSelected(true);
-
-        //fold1FlagImageView = (ImageView)findViewById(R.id.fold1ImageView);
-        //fold2FlagImageView = (ImageView)findViewById(R.id.fold2ImageView);
-        //fold3FlagImageView = (ImageView)findViewById(R.id.fold3ImageView);
 
         fold1TextView = (TextView)findViewById(R.id.fold1TextView);
         fold2TextView = (TextView)findViewById(R.id.fold2TextView);
-        //fold3TextView = (TextView)findViewById(R.id.fold3TextView);
 
         appControlBarBtn = (LongTouchBtn) findViewById(R.id.appControlBarBtn);
 
@@ -302,6 +283,50 @@ public class DetailActivity extends AppCompatActivity{
         });
     }
 
+    private void initRecycleView(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);//设置水平滚动
+        zhengQueRecycleView.setLayoutManager(linearLayoutManager);//这里用线性显示 类似于listview
+
+        zhengQueRecycleView.setFocusableInTouchMode(false);
+        zhengQueRecycleView.requestFocus();
+
+        zhengQueItemAdapter = new RecyclerViewVideoItemAdapter(this,zqVideoList,skiingModel);
+
+        zhengQueItemAdapter.setItemClickListener(new RecyclerViewVideoItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                VideoModel videoModel  = (VideoModel) zqVideoList.get(position);
+                currentVideoModel = videoModel;
+                selectVideoHandle();
+            }
+        });
+        zhengQueRecycleView.setAdapter(zhengQueItemAdapter);
+        zhengQueItemAdapter.notifyDataSetChanged();
+
+
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);//设置水平滚动
+        cuoWuRecycleView.setLayoutManager(linearLayoutManager);//这里用线性显示 类似于listview
+
+        cuoWuRecycleView.setFocusableInTouchMode(false);
+        cuoWuRecycleView.requestFocus();
+
+        cuoWuItemAdapter = new RecyclerViewVideoItemAdapter(this,cwVideoList,skiingModel);
+
+        cuoWuItemAdapter.setItemClickListener(new RecyclerViewVideoItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                VideoModel videoModel  = (VideoModel) cwVideoList.get(position);
+                currentVideoModel = videoModel;
+                selectVideoHandle();
+            }
+        });
+        cuoWuRecycleView.setAdapter(cuoWuItemAdapter);
+
+        cuoWuItemAdapter.notifyDataSetChanged();
+    }
+
     private void selectedFoldInfoLeftBgImageView(){
         foldInfoLeftBgImageView.setBackgroundColor(getResources().getColor(R.color.activity_detial_fold_type_btn_selected_bg_color));
         foldInfoRightBgImageView.setBackgroundColor(getResources().getColor(R.color.activity_detial_fold_type_btn_normal_bg_color));
@@ -329,33 +354,6 @@ public class DetailActivity extends AppCompatActivity{
     }
 
 
-    /**设置GirdView参数，绑定数据*/
-    private void initZhengQueGridView() {
-        int size = zqVideoList.size();
-        int length = 220;
-        if(ShareKey.TestImageAndVideo){
-            length = 120;
-        }
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        float density = dm.density;
-        int gridviewWidth = (int) (size * (length + 4) * density);
-        int itemWidth = (int) (length * density);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
-        gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
-        gridView.setColumnWidth(itemWidth); // 设置列表项宽
-        gridView.setHorizontalSpacing(5); // 设置列表项水平间距
-        gridView.setStretchMode(GridView.NO_STRETCH);
-        gridView.setNumColumns(size); // 设置列数量=列表集合数
-
-
-        gridViewAdapter = new MyGridViewAdapter(getApplicationContext(),
-                zqVideoList,skiingModel);
-        gridView.setAdapter(gridViewAdapter);
-    }
-
 
     private void loadData(){
         String  zqJsonString = getJson(this,skiingModel.getVideoZhengJueJsonFilePath());
@@ -377,9 +375,6 @@ public class DetailActivity extends AppCompatActivity{
             cwVideoList = cuDatas;
         }
 
-//        if(zqVideoList.size()>0) {
-//            currentVideoModel = zqVideoList.get(0);
-//        }
 
         System.out.print("mainJsonString:"+mainJsonString);
         if(null != zqJsonString && !zqJsonString.isEmpty() && !zqJsonString.equals("")) {
@@ -594,22 +589,19 @@ public class DetailActivity extends AppCompatActivity{
 
     public void typeZhengQueBtnClcked(View view){
         typeBgImageView.setImageResource(R.mipmap.detail_type_bg_blue);
-//        typeZhengQueImageButton.setVisibility(View.INVISIBLE);
-//        typeCuoWuImageButton.setVisibility(View.VISIBLE);
-        gridViewAdapter.setList(zqVideoList);
-        gridViewAdapter.notifyDataSetChanged();
-        zhengQueHorizontalScrollView.scrollTo(0,0);
+
         mainVideoImageView.setVisibility(View.VISIBLE);
+
+        zhengQueRecycleView.setVisibility(View.VISIBLE);
+        cuoWuRecycleView.setVisibility(View.GONE);
     }
     public void typeCuoWuBtnClcked(View view){
         typeBgImageView.setImageResource(R.mipmap.detail_type_bg_red);
-//        typeZhengQueImageButton.setVisibility(View.VISIBLE);
-//        typeCuoWuImageButton.setVisibility(View.INVISIBLE);
 
-        gridViewAdapter.setList(cwVideoList);
-        gridViewAdapter.notifyDataSetChanged();
-        zhengQueHorizontalScrollView.scrollTo(0,0);
         mainVideoImageView.setVisibility(View.GONE);
+
+        zhengQueRecycleView.setVisibility(View.GONE);
+        cuoWuRecycleView.setVisibility(View.VISIBLE);
     }
 
     public void backButtonClicked(View view){
@@ -649,49 +641,17 @@ public class DetailActivity extends AppCompatActivity{
     ////
 
     private void setFoldTextView(){
-//        fold1TextView.setText(skiingModel.getTeachTitle());
-//        fold2TextView.setText(skiingModel.getTeachIntroduction());
-//        fold3TextView.setText(skiingModel.getTeachTarget());
 
         if(mainVideoModel != null){
-            fold1TextView.setText(mainVideoModel.getVideoLessonIntro());
+            fold1TextView.setText("    "+mainVideoModel.getVideoLessonIntro());
         }
         if(currentVideoModel != null){
-            fold2TextView.setText(currentVideoModel.getVideoActionIntroduction());
+            fold2TextView.setText("    "+currentVideoModel.getVideoActionIntroduction());
             //fold3TextView.setText(currentVideoModel.getVideoCuoWuAction());
         }
     }
 
-//    public void  foldBigBtn1Clicked(View view){
-//        fold1BigButton.setSelected(!fold1BigButton.isSelected());
-//        if(fold1BigButton.isSelected()){
-//            fold1TextView.setVisibility(View.VISIBLE);
-//            fold1FlagImageView.setImageDrawable(getResources().getDrawable(R.mipmap.detail_arrow_down));
-//        }else {
-//            fold1TextView.setVisibility(View.GONE);
-//            fold1FlagImageView.setImageDrawable(getResources().getDrawable(R.mipmap.detail_arrow_right));
-//        }
-//    }
-//    public void  foldBigBtn2Clicked(View view){
-//        fold2BigButton.setSelected(!fold2BigButton.isSelected());
-//        if(fold2BigButton.isSelected()){
-//            fold2TextView.setVisibility(View.VISIBLE);
-//            fold2FlagImageView.setImageDrawable(getResources().getDrawable(R.mipmap.detail_arrow_down));
-//        }else {
-//            fold2TextView.setVisibility(View.GONE);
-//            fold2FlagImageView.setImageDrawable(getResources().getDrawable(R.mipmap.detail_arrow_right));
-//        }
-//    }
-//    public void  foldBigBtn3Clicked(View view){
-//        fold3BigButton.setSelected(!fold3BigButton.isSelected());
-//        if(fold3BigButton.isSelected()){
-//            fold3TextView.setVisibility(View.VISIBLE);
-//            fold3FlagImageView.setImageDrawable(getResources().getDrawable(R.mipmap.detail_arrow_down));
-//        }else {
-//            fold3TextView.setVisibility(View.GONE);
-//            fold3FlagImageView.setImageDrawable(getResources().getDrawable(R.mipmap.detail_arrow_right));
-//        }
-//    }
+
 
     int count = 0;
     public void appControlBarBtnClicked(View view) {

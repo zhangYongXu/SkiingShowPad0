@@ -12,13 +12,13 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="fitCenter"
                     android:src="@mipmap/list_activity_item_bg"/>
 
                 <cn.geeksworld.skiingshow.views.MyImageViewRoundOval
                     android:id="@+id/itemShowImageView"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginLeft="20dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/acticity_list_logo"/>
@@ -27,7 +27,7 @@
                 <TextView
                     android:id="@+id/itemTitleTextView"
                     android:layout_marginTop="10dp"
-                    android:layout_marginLeft="80dp"
+                    android:layout_marginLeft="100dp"
                     android:layout_marginRight="15dp"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
