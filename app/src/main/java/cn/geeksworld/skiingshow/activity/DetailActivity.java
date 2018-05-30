@@ -643,10 +643,10 @@ public class DetailActivity extends AppCompatActivity{
     private void setFoldTextView(){
 
         if(mainVideoModel != null){
-            fold1TextView.setText("    "+mainVideoModel.getVideoLessonIntro());
+            fold1TextView.setText(mainVideoModel.getVideoLessonIntro());
         }
         if(currentVideoModel != null){
-            fold2TextView.setText("    "+currentVideoModel.getVideoActionIntroduction());
+            fold2TextView.setText(currentVideoModel.getVideoActionIntroduction());
             //fold3TextView.setText(currentVideoModel.getVideoCuoWuAction());
         }
     }
