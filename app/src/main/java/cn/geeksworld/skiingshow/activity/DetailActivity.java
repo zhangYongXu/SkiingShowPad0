@@ -344,9 +344,11 @@ public class DetailActivity extends AppCompatActivity{
         if(currentVideoModel != null){
             showCurrentFaceImage();
             selectedFoldInfoRightBgImageView();
+            fold2TextView.setText(currentVideoModel.getVideoActionIntroduction());
         }else {
             showMainVideoFaceImageFromVideo();
             selectedFoldInfoLeftBgImageView();
+            fold2TextView.setText("");
         }
         prepareVideo();
         videoView.startPlayNow();
