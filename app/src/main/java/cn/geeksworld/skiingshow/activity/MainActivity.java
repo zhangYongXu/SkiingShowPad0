@@ -90,22 +90,12 @@ public class MainActivity extends AppCompatActivity {
                 R.mipmap.banner2,
                 R.mipmap.banner3,
                 R.mipmap.banner4,
-                R.mipmap.banner5,
-                R.mipmap.banner6,
-                R.mipmap.banner7,
-                R.mipmap.banner8,
-                R.mipmap.banner9,
-                R.mipmap.banner10
+                R.mipmap.banner5
         };
         adapter_vp_header = new MyLLocalPagerAdapter(viewPagerHeader, this, headerRes);
         viewPagerHeader.setAdapter(adapter_vp_header);
 
         int[] footerRes={
-                R.mipmap.banner1,
-                R.mipmap.banner2,
-                R.mipmap.banner3,
-                R.mipmap.banner4,
-                R.mipmap.banner5,
                 R.mipmap.banner6,
                 R.mipmap.banner7,
                 R.mipmap.banner8,
