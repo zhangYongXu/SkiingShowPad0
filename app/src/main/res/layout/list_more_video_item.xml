@@ -29,11 +29,12 @@
                 android:padding="5dp">
                 <TextView
                     android:id="@+id/titleTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:textSize="@dimen/textSize16"
                     android:ellipsize="end"
                     android:lines="2"
+                    android:gravity="center_vertical"
                     android:text="标题标题标题标题标题标题标题标标题标题标题标题标题标题标题标标题标题标题标题标题标题标题标标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题"/>
             </RelativeLayout>
         </LinearLayout>

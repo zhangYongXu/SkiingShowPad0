@@ -31,6 +31,7 @@ public class AppModelControlManager {
     }
     //显示系统底部操作控制条
     static public void showSystemHandleView(Activity activity){
+
         View decorView = activity.getWindow().getDecorView();
         int uiOptions =View.SYSTEM_UI_FLAG_VISIBLE;
         decorView.setSystemUiVisibility(uiOptions);
@@ -38,6 +39,7 @@ public class AppModelControlManager {
     }
     //隐藏系统底部操作控制条
     static public void hiddenSystemHandleView(Activity activity){
+
         View decorView = activity.getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;

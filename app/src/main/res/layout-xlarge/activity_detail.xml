@@ -13,21 +13,19 @@
         <RelativeLayout
             android:id="@+id/videoContainer"
             android:layout_width="match_parent"
-            android:layout_height="607.5dp"
+            android:layout_height="450dp"
             android:layout_below="@+id/inTitle">
 
             <cn.geeksworld.skiingshow.views.SimpleVideoView
                 android:id="@+id/videoView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_margin="0dp"
-                android:padding="0dp" />
+                android:layout_centerInParent="true" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/listLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="220dp"
             android:orientation="vertical"
             android:layout_below="@+id/videoContainer">
             <ImageView
@@ -39,7 +37,7 @@
             <LinearLayout
                 android:id="@+id/typeButtonLayout"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="45dp"
                 android:orientation="horizontal"
                 android:background="@color/white"
                 android:paddingBottom="4dp">
@@ -67,8 +65,9 @@
             <LinearLayout
                 android:id="@+id/typeButtonTextLayout"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:orientation="horizontal">
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp">
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -81,7 +80,8 @@
                         android:text="动作教学"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize35" />
+                        android:textSize="@dimen/textSize30"
+                        android:paddingBottom="2dp"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -95,7 +95,8 @@
                         android:text="错误动作"
                         android:textAlignment="center"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize35" />
+                        android:textSize="@dimen/textSize30"
+                        android:paddingBottom="2dp"/>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -106,16 +107,17 @@
                 android:layout_below="@+id/typeButtonLayout">
                 <ImageView
                     android:id="@+id/mainVideoImageView"
-                    android:layout_width="400dp"
-                    android:layout_height="225dp"
+                    android:layout_width="250dp"
+                    android:layout_height="140.625dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:src="@mipmap/mine_head_bg"
                     android:scaleType="fitXY"/>
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp" >
+                    android:layout_margin="10dp" >
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/zhengQueRecycleView"
                         android:layout_width="match_parent"
@@ -131,7 +133,7 @@
         <LinearLayout
             android:id="@+id/infoButtonTextLayout"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_below="@id/listLayout"
             android:orientation="horizontal"
             android:background="@color/white">
@@ -139,7 +141,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:paddingRight="1dp">
+                android:paddingRight="2dp">
                 <ImageView
                     android:id="@+id/foldInfoLeftBgImageView"
                     android:layout_width="match_parent"
@@ -153,7 +155,7 @@
                     android:text="课程简介"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize35" />
+                    android:textSize="@dimen/textSize30" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
@@ -172,7 +174,7 @@
                     android:text="练习动作要领"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize35" />
+                    android:textSize="@dimen/textSize30" />
             </RelativeLayout>
         </LinearLayout>
         <ScrollView
@@ -189,7 +191,7 @@
                 android:paddingLeft="30dp"
                 android:paddingTop="30dp"
                 android:paddingBottom="30dp"
-                android:textSize="@dimen/textSize28"
+                android:textSize="@dimen/textSize25"
                 android:lineSpacingExtra="10dp" />
         </ScrollView>
         <ScrollView
@@ -207,7 +209,7 @@
                 android:paddingLeft="30dp"
                 android:paddingTop="30dp"
                 android:paddingBottom="30dp"
-                android:textSize="@dimen/textSize28"
+                android:textSize="@dimen/textSize25"
                 android:lineSpacingExtra="10dp" />
         </ScrollView>
 

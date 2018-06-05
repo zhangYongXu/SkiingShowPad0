@@ -99,8 +99,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onResume() {
         timeStart();
         super.onResume();
-        //根据设置，判断是否在test模式下
-        //AppModelControlManager.judgeAppControllTestMode(this);
+
+        AppModelControlManager.hiddenSystemHandleView(this);
     }
 
 

@@ -80,7 +80,8 @@
             android:layout_gravity="center_vertical"
             android:padding="10dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/video_full" />
+            android:src="@mipmap/video_full"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

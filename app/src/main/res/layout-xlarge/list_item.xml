@@ -7,21 +7,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp">
+            android:layout_marginBottom="10dp">
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="170dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_height="120dp"
                     android:layout_centerVertical="true"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/list_activity_item_bg" />
 
                 <ImageView
                     android:id="@+id/itemShowImageView"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_marginLeft="18dp"
+                    android:layout_width="105dp"
+                    android:layout_height="105dp"
+                    android:layout_marginLeft="9dp"
                     android:layout_centerVertical="true"
                     android:scaleType="fitCenter"
                     android:src="@mipmap/acticity_list_logo" />
@@ -30,12 +28,12 @@
                 <TextView
                     android:id="@+id/itemTitleTextView"
                     android:layout_marginTop="30dp"
-                    android:layout_marginLeft="220dp"
+                    android:layout_marginLeft="140dp"
                     android:layout_marginRight="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="标题"
-                    android:textSize="@dimen/textSize32"
+                    android:textSize="@dimen/textSize25"
                     android:textColor="#54afc5"
                     android:lines="2"
                     android:ellipsize="end"

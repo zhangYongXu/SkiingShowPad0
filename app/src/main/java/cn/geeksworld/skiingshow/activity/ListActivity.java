@@ -162,6 +162,8 @@ public class ListActivity extends AppCompatActivity {
     protected void onResume() {
         timeStart();
         super.onResume();
+
+        AppModelControlManager.hiddenSystemHandleView(this);
     }
     //region 无操作 返回主页
 
@@ -199,4 +201,5 @@ public class ListActivity extends AppCompatActivity {
         super.onPause();
         backMain.cancel();
     }
+
 }

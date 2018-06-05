@@ -1,5 +1,7 @@
 package cn.geeksworld.skiingshow.model;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by xhs on 2018/3/16.
  */
@@ -28,6 +30,8 @@ public class VideoModel {
     private String videoCuoWuAction;
 
     private String localCommonVideoSDPath;
+
+    public Bitmap bitmap;
 
 
     public void setVideoId(int videoId) {

@@ -2,13 +2,8 @@ package cn.geeksworld.skiingshow.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
-import android.media.ThumbnailUtils;
-import android.net.Uri;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -17,16 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import cn.geeksworld.skiingshow.R;
 import cn.geeksworld.skiingshow.Tools.ShareKey;
@@ -39,13 +27,10 @@ import cn.geeksworld.skiingshow.model.VideoModel;
 
 
 
-public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
+public class RecyclerViewMoreVideoItemAdapter extends RecyclerView.Adapter {
 
-    private MediaMetadataRetriever media;
 
-    private SkiingModel skiingModel;
-
-    List<VideoModel> list;//存放数据
+    List<File> list;//存放数据
     Context context;
 
     private final DisplayMetrics metrics;
@@ -54,28 +39,23 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
         void onItemClick(int position);
     }
 
-    private RecyclerViewVideoItemAdapter.OnItemClickListener mItemClickListener;
-    public void setItemClickListener(RecyclerViewVideoItemAdapter.OnItemClickListener itemClickListener){
+    private RecyclerViewMoreVideoItemAdapter.OnItemClickListener mItemClickListener;
+    public void setItemClickListener(RecyclerViewMoreVideoItemAdapter.OnItemClickListener itemClickListener){
         mItemClickListener = itemClickListener;
     }
 
-    public RecyclerViewVideoItemAdapter(Context _context,List<VideoModel> _list,SkiingModel _skiingModel) {
-        media = new MediaMetadataRetriever();
+    public RecyclerViewMoreVideoItemAdapter(Context _context, List<File> _list) {
         this.list = _list;
         this.context = _context;
-        this.skiingModel = _skiingModel;
 
         metrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        for(VideoModel videoModel : list){
-            getVideoThumbnail(getCurrentVideoPath(videoModel),videoModel,null);
-        }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder holder = new MyFragViewHolder(LayoutInflater.from(context).inflate(R.layout.detail_list, parent, false));
+        RecyclerView.ViewHolder holder = new MyFragViewHolder(LayoutInflater.from(context).inflate(R.layout.list_more_video_item, parent, false));
         return holder;
     }
 
@@ -106,63 +86,49 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
 
         MyFragViewHolder fragHolder = (MyFragViewHolder) holder;
 
-        VideoModel videoModel = (VideoModel) list.get(position);
+
+        File mp4File = list.get(position);
         //设置textView显示内容为list里的对应项
 
-        fragHolder.detailItemTextView.setText(videoModel.getVideoTitle());
+        String name = getFileName(mp4File.getAbsolutePath());
+
+       fragHolder.titleTextView.setText(name);
         //显示图片
-        showCurrentFaceImageFromVideo(fragHolder.detailItemImageView,videoModel);
+        showCurrentFaceImageFromVideo(fragHolder.showImageView,mp4File);
     }
 
-    private void showCurrentFaceImageFromVideo(ImageView imageView,VideoModel videoModel){
-        if(null != videoModel.bitmap){
-            imageView.setImageBitmap(videoModel.bitmap);
-            return;
+    public String getFileName(String pathandname){
+        int start=pathandname.lastIndexOf("/");
+        int end=pathandname.lastIndexOf(".");
+        if (start!=-1 && end!=-1) {
+            return pathandname.substring(start+1, end);
         }
-        String videoPath = getCurrentVideoPath(videoModel);
-        getVideoThumbnail(videoPath,videoModel,imageView);
+        else {
+            return null;
+        }
+    }
+
+    private void showCurrentFaceImageFromVideo(ImageView imageView,File mp4File){
+        String videoPath = mp4File.getAbsolutePath();
+        Bitmap bitmap = getVideoThumbnail(videoPath);
+        imageView.setImageBitmap(bitmap);
 
         //测试
         if(ShareKey.TestImageAndVideo){
             imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.test_video_image));
         }
     }
-    //获取当前视频路径
-    private String getCurrentVideoPath(VideoModel videoModel){
-        String videoPath = ShareKey.getSDDir() + skiingModel.getLocalCommonSDDirPath() + "第" + (skiingModel.getOrderNum()+1) + "课/" + videoModel.getLocalCommonVideoSDPath();
-        return videoPath;
-    }
-    private Uri uriWithFilePath(String filePath){
-        //String path = "/storage/extsd/video/er_tong_dan_ban_jiao_cheng_item1_cuo_wu_4.mp4";
-        String path = filePath;
-        File file = new File(path);
-        if(file.exists()){
-            Uri uri = Uri.parse(path);
-            return uri;
-        }else {
-            Toast.makeText(context,"视频文件不存在:"+path,Toast.LENGTH_LONG).show();
-            String videoUri = filePath;
-            return Uri.parse(videoUri);
-        }
-    }
-    public void getVideoThumbnail(final String videoPath, final VideoModel videoModel,final ImageView imageView) {
-        try {
-            Uri uri = uriWithFilePath(videoPath);
-            media.setDataSource(context,uri);
-            Bitmap bitmap = media.getFrameAtTime(0,MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-            videoModel.bitmap = bitmap;
-            if(null != imageView){
-                imageView.setImageBitmap(bitmap);
-            }
-            Log.i("ee","");
-        }catch (IllegalArgumentException e){
-            e.printStackTrace();
-            Log.i("IllegalArgException",e.toString());
-        }catch (Exception e){
-            e.printStackTrace();
-            Log.i("Exception",e.toString());
-        }
 
+    public static Bitmap getVideoThumbnail(String videoPath) {
+        try {
+            MediaMetadataRetriever media = new MediaMetadataRetriever();
+            media.setDataSource(videoPath);
+            Bitmap bitmap = media.getFrameAtTime(0,MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+            return bitmap;
+        }catch (IllegalArgumentException e){
+            Log.i("exception  xx","");
+        }
+        return null;
     }
 
     //要显示的子项数量
@@ -174,14 +140,14 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
     //这里定义的是子项的类，不要在这里直接对获取对象进行操作
     public class MyFragViewHolder extends RecyclerView.ViewHolder {
 
-        TextView detailItemTextView;
-        ImageView detailItemImageView;
+        TextView titleTextView;
+        ImageView showImageView;
 
 
         public MyFragViewHolder(View itemView) {
             super(itemView);
-            detailItemTextView = itemView.findViewById(R.id.detailItemTextView);
-            detailItemImageView = itemView.findViewById(R.id.detailItemImageView);
+            titleTextView = itemView.findViewById(R.id.titleTextView);
+            showImageView = itemView.findViewById(R.id.videoShowImageView);
 
         }
     }
@@ -190,7 +156,7 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
     /*之下的方法都是为了方便操作，并不是必须的*/
 
     //在指定位置插入，原位置的向后移动一格
-    public boolean addItem(int position, VideoModel model) {
+    public boolean addItem(int position, File model) {
         if (position < list.size() && position >= 0) {
             list.add(position, model);
             notifyItemInserted(position);

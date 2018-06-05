@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -147,6 +149,9 @@ public class DetailActivity extends AppCompatActivity{
         inTitle.findViewById(R.id.title_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(videoView.isFullScreen()){
+                    videoView.setIsFullScreen(false);
+                }
                 finish();
             }
         });
@@ -177,17 +182,28 @@ public class DetailActivity extends AppCompatActivity{
 
         localCommonDirPath = skiingModel.getLocalCommonDirPath() + "videoDetailJson/item"+(skiingModel.getOrderNum()+1)+"/";
 
-        outMetrics = new DisplayMetrics();
-        params_portrait = new RelativeLayout.LayoutParams(outMetrics.widthPixels, outMetrics.widthPixels * 9 / 16);
-        params_landscape = new RelativeLayout.LayoutParams(outMetrics.heightPixels, outMetrics.widthPixels);
+        if (Build.VERSION.SDK_INT < 17 ) {
+            outMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
+        }else {
+            Context context = getApplicationContext();
+            DisplayMetrics dm = new DisplayMetrics();
+            outMetrics = dm;
+            WindowManager windowMgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+            windowMgr.getDefaultDisplay().getRealMetrics(dm);
+        }
+
+        params_portrait = new RelativeLayout.LayoutParams(outMetrics.widthPixels, (int)(outMetrics.widthPixels * (9 / 16.0)));
+
+        params_landscape = new RelativeLayout.LayoutParams(outMetrics.heightPixels, (int)(outMetrics.heightPixels * (9 / 16.0)));
+        params_landscape.addRule(RelativeLayout.CENTER_IN_PARENT);
+        params_landscape.addRule(RelativeLayout.CENTER_VERTICAL);
+        params_landscape.addRule(RelativeLayout.CENTER_HORIZONTAL);
     }
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
      */
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
-    }
+
     private void initView(){
 
         videoView = (SimpleVideoView) findViewById(R.id.videoView);
@@ -198,12 +214,14 @@ public class DetailActivity extends AppCompatActivity{
 
         cuoWuRecycleView = (RecyclerView)findViewById(R.id.cuoWuRecycleView);
 
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        float height = dm.heightPixels;
-        float width = dm.widthPixels;
 
-        float videoHeightPixel = (float)(width*(9.0/16.0));
-        int videoHeithtDp = px2dip(this,videoHeightPixel);
+
+
+
+        float height = outMetrics.heightPixels;
+        float width = outMetrics.widthPixels;
+
+        int videoHeightPixel = (int) (width*(9.0/16.0));
 
         /* 弹出框测试
         AlertDialog.Builder bb = new AlertDialog.Builder(this);
@@ -227,7 +245,7 @@ public class DetailActivity extends AppCompatActivity{
 
         if(!ShareKey.TestImageAndVideo){
             RelativeLayout.LayoutParams linearParams =  (RelativeLayout.LayoutParams)videoContainer.getLayoutParams();
-            linearParams.height = videoHeithtDp;
+            linearParams.height = videoHeightPixel;
             videoContainer.setLayoutParams(linearParams);
         }
 
@@ -614,11 +632,11 @@ public class DetailActivity extends AppCompatActivity{
         if (fullScreen) {
             //otherContainer.setVisibility(View.GONE);
             videoContainer.setLayoutParams(params_landscape);
-            videoView.setLayoutParams(params_landscape);
+            //videoView.setLayoutParams(params_landscape);
         } else {
             //otherContainer.setVisibility(View.VISIBLE);
             videoContainer.setLayoutParams(params_portrait);
-            videoView.setLayoutParams(params_portrait);
+            //videoView.setLayoutParams(params_portrait);
         }
     }
 

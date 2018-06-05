@@ -141,4 +141,10 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
         videoView.start();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppModelControlManager.hiddenSystemHandleView(this);
+    }
 }

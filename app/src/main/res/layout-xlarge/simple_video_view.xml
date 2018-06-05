@@ -92,27 +92,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@mipmap/simple_video_player_big_play_150"
+        android:src="@mipmap/simple_video_player_big_play"
         android:background="@drawable/simple_video_big_button_shape"
-        android:scaleType="centerInside"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp"
-        android:paddingTop="30dp"
-        android:paddingBottom="30dp"/>
+        android:scaleType="fitCenter"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
     <!-- 大暂停按钮 -->
     <ImageView
         android:id="@+id/big_pase_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:scaleType="centerInside"
-        android:src="@mipmap/simple_video_player_big_pause_150"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/simple_video_player_big_pause"
         android:visibility="invisible"
         android:background="@drawable/simple_video_big_button_shape"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp"
-        android:paddingTop="30dp"
-        android:paddingBottom="30dp"/>
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
     <TextView
         android:id="@+id/TipTextView"
         android:layout_width="wrap_content"
