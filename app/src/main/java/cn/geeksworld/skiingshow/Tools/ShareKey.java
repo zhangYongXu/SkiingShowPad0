@@ -57,13 +57,18 @@ public class ShareKey {
     public static final String TODAY = "today";
 
     public static final String getSDDir(){
-        if(TestImageAndVideo){
-            Map<String,String> pMap = System.getenv();
-            String sd2=pMap.get("SECONDARY_STORAGE")+"/";
-            return sd2;
-        }else {
-            return "/storage/extsd/";
-        }
+//        if(TestImageAndVideo){
+//            Map<String,String> pMap = System.getenv();
+//            String sd2=pMap.get("SECONDARY_STORAGE")+"/";
+//            return sd2;
+//        }else {
+//            return "/storage/extsd/";
+//        }
+        String p = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+        String fp = p + File.separator;
+        return fp;
+
     }
 
 

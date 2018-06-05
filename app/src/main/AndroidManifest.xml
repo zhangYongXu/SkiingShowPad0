@@ -44,6 +44,14 @@
         <activity android:name="cn.geeksworld.skiingshow.activity.DetailActivity" android:screenOrientation="portrait">
 
         </activity>
+
+        <activity android:name="cn.geeksworld.skiingshow.activity.MoreVideoActivity" android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name="cn.geeksworld.skiingshow.activity.MoreVideoPlayActivity" android:configChanges="orientation|keyboard|layoutDirection|screenSize">
+
+        </activity>
     </application>
 
 </manifest>

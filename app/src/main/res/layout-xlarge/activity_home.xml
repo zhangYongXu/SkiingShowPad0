@@ -24,7 +24,7 @@
                 android:orientation="vertical">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1080dp">
+                    android:layout_height="800dp">
                     <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -80,7 +80,7 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="450dp"
+                    android:layout_height="334dp"
                     android:layout_marginTop="10dp">
 
                     <ImageView
@@ -89,12 +89,13 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/activity_home_more_content"/>
+                        android:src="@mipmap/activity_home_more_content"
+                        android:onClick="moreContentImageViewClicked"/>
 
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="230dp"
+                    android:layout_height="170dp"
                     android:layout_marginTop="10dp">
                     <ImageView
                         android:id="@+id/bImageView"

@@ -86,12 +86,14 @@
                     android:layout_marginTop="10dp">
 
                     <ImageView
+                        android:id="@+id/moreContentImageView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/activity_home_more_content"/>
+                        android:src="@mipmap/activity_home_more_content"
+                        android:onClick="moreContentImageViewClicked"/>
 
                 </RelativeLayout>
                 <RelativeLayout

@@ -14,10 +14,10 @@ import android.widget.ImageView;
 public class RollPageAdapter extends StaticPagerAdapter {
 
     private int[] res={
-            R.mipmap.b1,
-            R.mipmap.b2,
-            R.mipmap.b3,
-            R.mipmap.b4
+            R.mipmap.banner1,
+            R.mipmap.banner2,
+            R.mipmap.banner3,
+            R.mipmap.banner4
     };
 
     @Override

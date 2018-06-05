@@ -38,6 +38,6 @@
 
 
     <dimen name="appTopNavigationViewHeight">40dp</dimen>
-    <dimen name="appTopNavigationViewHeightXLarge">115dp</dimen>
-    <dimen name="appBottomNavigationViewHeightXLarge">107dp</dimen>
+    <dimen name="appTopNavigationViewHeightXLarge">85dp</dimen>
+    <dimen name="appBottomNavigationViewHeightXLarge">79.3dp</dimen>
 </resources>

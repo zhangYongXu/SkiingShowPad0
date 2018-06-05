@@ -83,6 +83,11 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void moreContentImageViewClicked(View view){
+        Intent intent=new Intent(HomeActivity.this,MoreVideoActivity.class);
+        startActivity(intent);
+    }
+
 
 
     //////////////////  在几分钟之内无操作就返回首页 /////////////////

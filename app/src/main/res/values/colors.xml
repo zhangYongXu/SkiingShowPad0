@@ -28,4 +28,6 @@
 
     <color name="SimpleVideoPlayViewPrograssColor">#aba7a2</color>
 
+    <color name="frag_main0_item_divide_color">#cecece</color>
+
 </resources>

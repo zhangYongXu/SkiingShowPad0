@@ -1,11 +1,14 @@
 package cn.geeksworld.skiingshow.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -79,7 +82,19 @@ public class MainActivity extends AppCompatActivity {
 
         playVideo();
         loadBanners();
+        requestWritePermission();
 
+
+    }
+    private static final int WRITE_PERMISSION = 0x01;
+    private void requestWritePermission(){
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) !=  PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},WRITE_PERMISSION);
+        }
+
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE) !=  PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},WRITE_PERMISSION);
+        }
     }
     private void loadBanners() {
 //        datas_banner.add("http://bmob-cdn-5476.b0.upaiyun.com/2017/10/25/9151395040c3e6da8087f773fe717c46.png");
