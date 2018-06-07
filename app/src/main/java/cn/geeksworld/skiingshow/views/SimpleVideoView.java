@@ -617,6 +617,8 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
         }
     }
 
+
+
     private void startPlay() {
         mBigPlayBtn.setVisibility(GONE);
         mBigPauseBtn.setVisibility(GONE);
@@ -748,5 +750,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
         this.mIsFullScreen = mIsFullScreen;
         Tool.setScreenLandscape(context);
     }
-
+    public void setFullLandscapeScreen(){
+        this.mIsFullScreen = true;
+    }
 }

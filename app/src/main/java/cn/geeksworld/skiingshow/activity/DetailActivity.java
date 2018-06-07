@@ -2,12 +2,14 @@ package cn.geeksworld.skiingshow.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.hardware.SensorManager;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
@@ -21,6 +23,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -150,7 +153,22 @@ public class DetailActivity extends AppCompatActivity{
         threadLoadCWVideoData();
 
 
+        //initScreenHandle();
     }
+//    private void initScreenHandle(){
+//        Configuration mConfiguration = this.getResources().getConfiguration(); //获取设置的配置信息
+//        int ori = mConfiguration.orientation; //获取屏幕方向
+//        if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
+//            //横屏
+//            videoView.setFullLandscapeScreen();
+//            video_full(true);
+//            Log.i("o","h");
+//        } else if (ori == mConfiguration.ORIENTATION_PORTRAIT) {
+//            //竖屏
+//            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//强制为横屏
+//            Log.i("o","s");
+//        }
+//    }
     //导航设置
     private void initNavigationView(){
         inTitle = findViewById(R.id.inTitle);
@@ -201,17 +219,19 @@ public class DetailActivity extends AppCompatActivity{
             windowMgr.getDefaultDisplay().getRealMetrics(dm);
         }
 
-        params_portrait = new RelativeLayout.LayoutParams(outMetrics.widthPixels, (int)(outMetrics.widthPixels * (9 / 16.0)));
+        int screenWidth = outMetrics.widthPixels<outMetrics.heightPixels?outMetrics.widthPixels:outMetrics.heightPixels;
+        int screenHeight = outMetrics.widthPixels<outMetrics.heightPixels?outMetrics.heightPixels:outMetrics.widthPixels;
+
+        params_portrait = new RelativeLayout.LayoutParams(screenWidth, (int)(screenWidth * (9 / 16.0)));
 
 
-
-        params_landscape = new RelativeLayout.LayoutParams(outMetrics.heightPixels, (int)(outMetrics.heightPixels * (9 / 16.0)));
+        params_landscape = new RelativeLayout.LayoutParams(screenHeight, (int)(screenHeight * (9 / 16.0)));
         params_landscape.addRule(RelativeLayout.CENTER_IN_PARENT);
         params_landscape.addRule(RelativeLayout.CENTER_VERTICAL);
         params_landscape.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        params_c_portrait = new LinearLayout.LayoutParams(outMetrics.widthPixels, (int)(outMetrics.widthPixels * (9 / 16.0)));
-        params_c_landscape = new LinearLayout.LayoutParams(outMetrics.heightPixels, outMetrics.widthPixels);
+        params_c_portrait = new LinearLayout.LayoutParams(screenWidth, (int)(screenWidth * (9 / 16.0)));
+        params_c_landscape = new LinearLayout.LayoutParams(screenHeight, screenWidth);
     }
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
@@ -746,18 +766,17 @@ public class DetailActivity extends AppCompatActivity{
 
     public void video_full(boolean fullScreen) {
         if (fullScreen) {
-            //otherContainer.setVisibility(View.GONE);
+            inTitle.setVisibility(View.GONE);
             contentVideoContainer.setLayoutParams(params_c_landscape);
             videoContainer.setLayoutParams(params_landscape);
             //videoView.setLayoutParams(params_landscape);
-            inTitle.setVisibility(View.GONE);
+
         } else {
-            //otherContainer.setVisibility(View.VISIBLE);
+            inTitle.setVisibility(View.VISIBLE);
             contentVideoContainer.setLayoutParams(params_c_portrait);
             videoContainer.setLayoutParams(params_portrait);
             //videoView.setLayoutParams(params_portrait);
 
-            inTitle.setVisibility(View.VISIBLE);
         }
     }
 
