@@ -4,10 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ImageView;
 
 import cn.geeksworld.skiingshow.Tools.Tool;
 import cn.geeksworld.skiingshow.model.VideoModel;
+import wseemann.media.FFmpegMediaMetadataRetriever;
 
 /**
  * Created by xhs on 2018/6/6.
@@ -27,11 +29,9 @@ public class AsyncTaskDataLoad extends AsyncTask {
     }
     @Override
     protected Object doInBackground(Object[] objects) {
+        /*
         MediaMetadataRetriever retriever = null;
-
         try {
-
-
             if (bitmap == null) {
                 retriever = new MediaMetadataRetriever();
                 retriever.setDataSource(videoFullPath);
@@ -48,13 +48,12 @@ public class AsyncTaskDataLoad extends AsyncTask {
 //                VideoDbHelper.update(mChallengeListData.uuid, mChallengeListData.thumbNailPath, mChallengeListData.duration + "");
 
             } else {
-
+                Log.i("","");
             }
-
 
         } catch (IllegalArgumentException e) {
             //本地视频文件不存在
-
+            Log.i("","");
         } finally {
             try {
                 if (retriever != null) {
@@ -65,6 +64,22 @@ public class AsyncTaskDataLoad extends AsyncTask {
             }
         }
        return videoModel;
+        */
+
+        FFmpegMediaMetadataRetriever mm = new FFmpegMediaMetadataRetriever();
+        try{
+            //获取视频文件数据
+            mm.setDataSource(videoFullPath);
+            //获取文件缩略图
+            Bitmap bitmap=mm.getFrameAtTime();
+            //更新图片
+            publishProgress(1);
+        }catch (Exception e){
+            Log.i("","");
+        }finally {
+            mm.release();
+        }
+        return videoModel;
     }
 
     @Override

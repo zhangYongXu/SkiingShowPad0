@@ -25,7 +25,7 @@
         android:layout_alignBottom="@id/video_view"
         android:background="#70000000"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="invisible">
 
         <ImageButton
             android:id="@+id/play_button"

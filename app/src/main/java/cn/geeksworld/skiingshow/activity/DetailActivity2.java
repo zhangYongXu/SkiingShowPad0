@@ -9,6 +9,7 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -39,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import cn.geeksworld.skiingshow.R;
 import cn.geeksworld.skiingshow.Tools.AppModelControlManager;
@@ -103,7 +107,7 @@ public class DetailActivity2 extends AppCompatActivity{
 
     private ScrollView leftBtnContentRightScrollView;
     private ScrollView rightBtnContentRightScrollView;
-
+    static ExecutorService fixedThreadPool;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,19 +120,21 @@ public class DetailActivity2 extends AppCompatActivity{
 
         initData();
 
-        loadData();
+        //loadData();
 
         initView();
 
-        initGridView();
+//        initGridView();
 
-        setFoldTextView();
+        asyncloadData();
 
-        showCurrentFaceImage();
-
-        showMainVideoFaceImageFromVideo();
-
-        prepareVideo();
+//        setFoldTextView();
+//
+//        showCurrentFaceImage();
+//
+//        showMainVideoFaceImageFromVideo();
+//
+//        prepareVideo();
 
 
     }
@@ -305,8 +311,17 @@ public class DetailActivity2 extends AppCompatActivity{
         gridView.setStretchMode(GridView.NO_STRETCH);
         gridView.setNumColumns(size); // 设置列数量=列表集合数
 
-        gridViewAdapter= new MyGridViewAdapter(this, zqVideoList,skiingModel);
+        gridViewAdapter= new MyGridViewAdapter(this,this, zqVideoList,skiingModel);
         gridView.setAdapter(gridViewAdapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                VideoModel videoModel  = (VideoModel) zqVideoList.get(i);
+                currentVideoModel = videoModel;
+                selectVideoHandle();
+            }
+        });
     }
 
     private void selectedFoldInfoLeftBgImageView(){
@@ -339,6 +354,34 @@ public class DetailActivity2 extends AppCompatActivity{
 
 
 
+    private void asyncloadData(){
+        final Handler handler = new Handler();
+        if (fixedThreadPool == null) {
+            fixedThreadPool = Executors.newFixedThreadPool(4);
+        }
+        fixedThreadPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                loadData();
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        initGridView();
+
+                        setFoldTextView();
+
+                        showCurrentFaceImage();
+
+                        showMainVideoFaceImageFromVideo();
+
+                        prepareVideo();
+                    }
+                });
+            }
+        });
+    }
+
     private void loadData(){
         String  zqJsonString = getJson(this,skiingModel.getVideoZhengJueJsonFilePath());
         String  cwJsonString = getJson(this,skiingModel.getVideoCuoWuJsonFilePath());
@@ -348,7 +391,8 @@ public class DetailActivity2 extends AppCompatActivity{
         if(null != zqJsonString && !zqJsonString.isEmpty() && !zqJsonString.equals("")){
             JSONArray zqJsonObj = (JSONArray) JSONArray.parse(zqJsonString);
             List<VideoModel> zqDatas = JSONArray.parseArray(Tool.parseJson(zqJsonObj), VideoModel.class);
-            zqVideoList = zqDatas;
+            zqVideoList.clear();
+            zqVideoList.addAll(zqDatas);
         }
 
 
@@ -356,7 +400,8 @@ public class DetailActivity2 extends AppCompatActivity{
         if(null != cwJsonString && !cwJsonString.isEmpty() && !cwJsonString.equals("")) {
             JSONArray cuJsonObj = (JSONArray) JSONArray.parse(cwJsonString);
             List<VideoModel> cuDatas = JSONArray.parseArray(Tool.parseJson(cuJsonObj), VideoModel.class);
-            cwVideoList = cuDatas;
+            cwVideoList.clear();
+            cwVideoList.addAll(cuDatas);
         }
 
 
@@ -370,8 +415,9 @@ public class DetailActivity2 extends AppCompatActivity{
 
             }
         }
-
     }
+
+
 
     private void showCurrentFaceImage(){
         if(null == currentVideoModel){
@@ -394,6 +440,9 @@ public class DetailActivity2 extends AppCompatActivity{
     private void showMainVideoFaceImageFromVideo(){
         String videoPath = getMainVideoPath();
         Bitmap bitmap = getVideoThumbnail(videoPath);
+        if(null == bitmap){
+            return;
+        }
         mainVideoImageView.setImageBitmap(bitmap);
         play_bg.setImageBitmap(bitmap);
 

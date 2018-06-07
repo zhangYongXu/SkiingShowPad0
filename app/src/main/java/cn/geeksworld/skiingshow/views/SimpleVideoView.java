@@ -122,8 +122,8 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                     break;
                 case EXIT_CONTROL_PANEL:
                     //执行退出动画
-                    if (mControlPanel.getVisibility() != View.GONE) {
-                        mControlPanel.setVisibility(View.GONE);
+                    if (mControlPanel.getVisibility() != INVISIBLE) {
+                        mControlPanel.setVisibility(INVISIBLE);
                         mBigPauseBtn.setVisibility(INVISIBLE);
                     }
                     break;
@@ -152,16 +152,16 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
         ((Activity) context).getWindowManager().getDefaultDisplay().getSize(screenSize);
 
         //设置控制面板初始不可见
-        mControlPanel.setVisibility(View.VISIBLE);
+        mControlPanel.setVisibility(INVISIBLE);
 
 
         //设置大的暂停按钮不可见
         mBigPauseBtn.setVisibility(INVISIBLE);
         //设置大的播放按钮可见
-        mBigPlayBtn.setVisibility(View.VISIBLE);
+        mBigPlayBtn.setVisibility(VISIBLE);
         //设置媒体控制器
 //      mMediaController = new MediaController(context);
-//      mMediaController.setVisibility(View.GONE);
+//      mMediaController.setVisibility(GONE);
 //      mVideoView.setMediaController(mMediaController);
 
         mVideoView.setOnPreparedListener(new OnPreparedListener() {
@@ -234,14 +234,14 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                 }
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    light_progress_container.setVisibility(View.GONE);
+                    light_progress_container.setVisibility(GONE);
                     if(!isMoving){//如果没有移动，就是点击
                         mviewClickedHandle();
                     }
                     //快进快退后 如果播放中 就隐藏进度条
                     if(mVideoView.isPlaying()){
                         if(mControlPanel.getVisibility()==VISIBLE){
-                            mControlPanel.setVisibility(View.GONE);
+                            mControlPanel.setVisibility(INVISIBLE);
                         }
                     }
                     isMoving = false;
@@ -327,7 +327,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                                     return false;
                                 }
                                 isLeftOrRightMoving = true;
-                                light_progress_container.setVisibility(View.GONE);
+                                light_progress_container.setVisibility(GONE);
                                 if(lastX>endX){//上一个位置应大于当前位置 ，手指头实际往左边去
                                     videoBackwordHandle();
                                 }
@@ -336,7 +336,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                                 }
                                 //视频 快进快退时 显示进度条
                                 if(mControlPanel.getVisibility()!=VISIBLE){
-                                    mControlPanel.setVisibility(View.VISIBLE);
+                                    mControlPanel.setVisibility(VISIBLE);
                                 }
                                 break;
                             case 'r':
@@ -346,7 +346,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                                     return false;
                                 }
                                 isLeftOrRightMoving = true;
-                                light_progress_container.setVisibility(View.GONE);
+                                light_progress_container.setVisibility(GONE);
                                 if(lastX>endX){//上一个位置应大于当前位置 ，手指头实际往左边去
                                     videoBackwordHandle();
                                 }else {//手指头实际往右边去
@@ -355,7 +355,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                                 int vis = mControlPanel.getVisibility();
                                 //视频 快进快退时 显示进度条
                                 if(mControlPanel.getVisibility()!=VISIBLE){
-                                    mControlPanel.setVisibility(View.VISIBLE);
+                                    mControlPanel.setVisibility(VISIBLE);
                                 }
                                 break;
 
@@ -391,7 +391,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
         WindowManager.LayoutParams params = ((Activity) context).getWindow().getAttributes();
         params.screenBrightness = currentLight / 255f;
         light_icon.setImageResource(R.mipmap.light_icon);
-        light_progress_container.setVisibility(View.VISIBLE);
+        light_progress_container.setVisibility(VISIBLE);
         if (currentLight > 249) {
             light_progress.setText(100 + "%");
         } else {
@@ -411,7 +411,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
         params.screenBrightness = currentLight / 255f;
 
         light_icon.setImageResource(R.mipmap.light_icon);
-        light_progress_container.setVisibility(View.VISIBLE);
+        light_progress_container.setVisibility(VISIBLE);
         if (currentLight > 249) {
             light_progress.setText(100 + "%");
         } else {
@@ -430,7 +430,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                 AudioManager.STREAM_MUSIC,
                 AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
         light_icon.setImageResource(R.mipmap.volume_icon);
-        light_progress_container.setVisibility(View.VISIBLE);
+        light_progress_container.setVisibility(VISIBLE);
         float progress = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         light_progress.setText((int) (progress / maxVolume * 100.0) + "%");
     }
@@ -441,7 +441,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                 AudioManager.STREAM_MUSIC,
                 AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);//| AudioManager.FLAG_SHOW_UI
         light_icon.setImageResource(R.mipmap.volume_icon);
-        light_progress_container.setVisibility(View.VISIBLE);
+        light_progress_container.setVisibility(VISIBLE);
         float progress = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         light_progress.setText((int) (progress / maxVolume * 100.0) + "%");
     }
@@ -524,7 +524,17 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
         mPlayBtn.setOnClickListener(this);
         mFullScreenBtn.setOnClickListener(this);
 
-        mControlPanel.setVisibility(VISIBLE);
+        //是否立即播放
+        if(isPlayNow){
+            if(!mVideoView.isPlaying()){
+                startPlay();
+                mControlPanel.setVisibility(INVISIBLE);
+            }
+            isPlayNow = false;
+        }else {
+            mControlPanel.setVisibility(VISIBLE);
+        }
+
 
         //进度条进度改变监听器
         mPlayProgressBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -559,11 +569,11 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
             mBigPlayBtn.setVisibility(VISIBLE);
             mBigPauseBtn.setVisibility(INVISIBLE);
 
-            mControlPanel.setVisibility(View.VISIBLE);
+            mControlPanel.setVisibility(VISIBLE);
 
         }else {
             playFromPauseState();
-            mControlPanel.setVisibility(View.GONE);
+            mControlPanel.setVisibility(INVISIBLE);
         }
     }
     @Override
@@ -572,7 +582,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
             //大的播放按钮
             if (!mVideoView.isPlaying()) {
                 startPlay();
-                mControlPanel.setVisibility(View.GONE);
+                mControlPanel.setVisibility(INVISIBLE);
             }
         }else if(v.getId() == R.id.big_pase_button){
             if(mVideoView.isPlaying()){
@@ -588,10 +598,10 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                 mBigPlayBtn.setVisibility(VISIBLE);
                 mBigPauseBtn.setVisibility(INVISIBLE);
 
-                mControlPanel.setVisibility(View.VISIBLE);
+                mControlPanel.setVisibility(VISIBLE);
             } else {
                 playFromPauseState();
-                mControlPanel.setVisibility(View.GONE);
+                mControlPanel.setVisibility(INVISIBLE);
             }
 
         } else if (v.getId() == R.id.full_screen_button) {
@@ -608,23 +618,21 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
     }
 
     private void startPlay() {
-        mBigPlayBtn.setVisibility(View.GONE);
+        mBigPlayBtn.setVisibility(GONE);
+        mBigPauseBtn.setVisibility(GONE);
         mVideoView.setBackground(null);
-        play_bg.setVisibility(View.GONE);
+        play_bg.setVisibility(GONE);
         mVideoView.start();
         mPlayBtn.setSelected(true);
-        mBigPlayBtn.setVisibility(GONE);
+
         //开始更新进度线程
         mUpdateThread = new Thread(mUpdateTask);
         stopThread = false;
         mUpdateThread.start();
     }
-
+    private boolean isPlayNow = false;
     public void startPlayNow(){
-        if(!mVideoView.isPlaying()){
-            startPlay();
-            mControlPanel.setVisibility(View.GONE);
-        }
+        isPlayNow = true;
     }
 
     //从暂停状态播放
@@ -637,6 +645,8 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
         }
         mVideoView.start();
         mPlayBtn.setSelected(true);
+        play_bg.setVisibility(GONE);
+        mVideoView.setBackground(null);
         mBigPlayBtn.setVisibility(GONE);
         mBigPauseBtn.setVisibility(INVISIBLE);
     }
@@ -670,6 +680,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
 
     //设置视频路径
     public void setVideoUri(Uri uri) {
+        mControlPanel.setVisibility(INVISIBLE);
         this.mVideoUri = uri;
         mVideoView.setVideoURI(mVideoUri);
     }
@@ -696,7 +707,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
     //设置视频进度
     public void setVideoProgress(int millisSecond, boolean isPlaying) {
         mVideoView.setBackground(null);
-        mBigPlayBtn.setVisibility(View.GONE);
+        mBigPlayBtn.setVisibility(GONE);
         mPlayProgressBar.setProgress(millisSecond);
         setPlayTime(millisSecond);
         if (mUpdateThread == null || !mUpdateThread.isAlive()) {

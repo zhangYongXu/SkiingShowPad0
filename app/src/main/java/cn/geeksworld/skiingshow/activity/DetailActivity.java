@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -56,6 +57,7 @@ import cn.geeksworld.skiingshow.R;
 import cn.geeksworld.skiingshow.Tools.AppModelControlManager;
 import cn.geeksworld.skiingshow.Tools.ShareKey;
 import cn.geeksworld.skiingshow.Tools.Tool;
+import cn.geeksworld.skiingshow.Tools.VideoFaceImageUtil;
 import cn.geeksworld.skiingshow.adapter.MyGridViewAdapter;
 import cn.geeksworld.skiingshow.adapter.RecyclerViewVideoItemAdapter;
 import cn.geeksworld.skiingshow.model.MainVideoModel;
@@ -118,7 +120,6 @@ public class DetailActivity extends AppCompatActivity{
     private ScrollView leftBtnContentRightScrollView;
     private ScrollView rightBtnContentRightScrollView;
 
-    static ExecutorService fixedThreadPool;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -138,7 +139,14 @@ public class DetailActivity extends AppCompatActivity{
 
         initRecycleView();
 
-        asyncloadData();
+        //asyncloadData();
+        //threadLoadData();
+
+        threadLoadMainVideoData();
+
+        threadLoadZQVideoData();
+
+        threadLoadCWVideoData();
 
 //        setFoldTextView();
 //
@@ -316,7 +324,7 @@ public class DetailActivity extends AppCompatActivity{
         zhengQueRecycleView.setFocusableInTouchMode(false);
         zhengQueRecycleView.requestFocus();
 
-        zhengQueItemAdapter = new RecyclerViewVideoItemAdapter(this,zqVideoList,skiingModel);
+        zhengQueItemAdapter = new RecyclerViewVideoItemAdapter(this,this,zqVideoList,skiingModel);
 
         zhengQueItemAdapter.setItemClickListener(new RecyclerViewVideoItemAdapter.OnItemClickListener() {
             @Override
@@ -337,7 +345,7 @@ public class DetailActivity extends AppCompatActivity{
         cuoWuRecycleView.setFocusableInTouchMode(false);
         cuoWuRecycleView.requestFocus();
 
-        cuoWuItemAdapter = new RecyclerViewVideoItemAdapter(this,cwVideoList,skiingModel);
+        cuoWuItemAdapter = new RecyclerViewVideoItemAdapter(this,this,cwVideoList,skiingModel);
 
         cuoWuItemAdapter.setItemClickListener(new RecyclerViewVideoItemAdapter.OnItemClickListener() {
             @Override
@@ -380,39 +388,95 @@ public class DetailActivity extends AppCompatActivity{
 
     }
 
-    private void asyncloadData(){
-        final Handler handler = new Handler();
-        if (fixedThreadPool == null) {
-            fixedThreadPool = Executors.newFixedThreadPool(4);
-        }
-        fixedThreadPool.execute(new Runnable() {
+
+
+    //一起异步加载
+    private void threadLoadData(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 loadData();
-                handler.post(new Runnable() {
+
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         zhengQueItemAdapter.notifyDataSetChanged();
                         cuoWuItemAdapter.notifyDataSetChanged();
 
                         setFoldTextView();
-
                         showCurrentFaceImage();
-
                         showMainVideoFaceImageFromVideo();
-
                         prepareVideo();
                     }
                 });
             }
-        });
+        }).start();
+    }
+    //子线程加载正确视频数据
+    private void threadLoadZQVideoData(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadZQVideoData();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        zhengQueItemAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
+    }
+    //子线程加载错误视频数据
+    private void threadLoadCWVideoData(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadCWVideoData();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        cuoWuItemAdapter.notifyDataSetChanged();
+
+                        setFoldTextView();
+                        showCurrentFaceImage();
+                        showMainVideoFaceImageFromVideo();
+                        prepareVideo();
+                    }
+                });
+            }
+        }).start();
+    }
+    //子线程加载主视频数据
+    private void threadLoadMainVideoData(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadMainVideoData();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setFoldTextView();
+                        showCurrentFaceImage();
+                        showMainVideoFaceImageFromVideo();
+                        prepareVideo();
+                    }
+                });
+            }
+        }).start();
     }
 
+    //同步一起加载数据
     private void loadData(){
+        loadZQVideoData();
+        loadCWVideoData();
+        loadMainVideoData();
+    }
+    //同步加载正确视频数据
+    private void loadZQVideoData(){
         String  zqJsonString = getJson(this,skiingModel.getVideoZhengJueJsonFilePath());
-        String  cwJsonString = getJson(this,skiingModel.getVideoCuoWuJsonFilePath());
-        String  mainJsonString = getJson(this,skiingModel.getVideoMainJsonFilePath());
-
         System.out.print("zjJsonString:"+zqJsonString);
         if(null != zqJsonString && !zqJsonString.isEmpty() && !zqJsonString.equals("")){
             JSONArray zqJsonObj = (JSONArray) JSONArray.parse(zqJsonString);
@@ -420,8 +484,10 @@ public class DetailActivity extends AppCompatActivity{
             zqVideoList.clear();
             zqVideoList.addAll(zqDatas);
         }
-
-
+    }
+    //同步加载错误视频数据
+    private void loadCWVideoData(){
+        String  cwJsonString = getJson(this,skiingModel.getVideoCuoWuJsonFilePath());
         System.out.print("cwJsonString:"+cwJsonString);
         if(null != cwJsonString && !cwJsonString.isEmpty() && !cwJsonString.equals("")) {
             JSONArray cuJsonObj = (JSONArray) JSONArray.parse(cwJsonString);
@@ -429,10 +495,12 @@ public class DetailActivity extends AppCompatActivity{
             cwVideoList.clear();
             cwVideoList.addAll(cuDatas);
         }
-
-
+    }
+    //同步加载主视频数据
+    private void loadMainVideoData(){
+        String  mainJsonString = getJson(this,skiingModel.getVideoMainJsonFilePath());
         System.out.print("mainJsonString:"+mainJsonString);
-        if(null != zqJsonString && !zqJsonString.isEmpty() && !zqJsonString.equals("")) {
+        if(null != mainJsonString && !mainJsonString.isEmpty() && !mainJsonString.equals("")) {
             try {
                 JSONObject obj = new JSONObject(mainJsonString);
                 MainVideoModel model = JSONArray.parseObject(obj.toString(), MainVideoModel.class);
@@ -454,18 +522,31 @@ public class DetailActivity extends AppCompatActivity{
 
     private void showCurrentFaceImageFromVideo(){
         String videoPath = getCurrentVideoPath();
-        Bitmap bitmap = getVideoThumbnail(videoPath);
 
-        play_bg.setImageBitmap(bitmap);
+        //同步加载卡
+        //Bitmap bitmap = getVideoThumbnail(videoPath);
+        //play_bg.setImageBitmap(bitmap);
 
+        //异步加载
+        if(null != currentVideoModel){
+            VideoFaceImageUtil.getVideoThumbnailFFmpeg(this,videoPath,currentVideoModel,play_bg);
+        }
 
     }
 
     private void showMainVideoFaceImageFromVideo(){
         String videoPath = getMainVideoPath();
-        Bitmap bitmap = getVideoThumbnail(videoPath);
-        mainVideoImageView.setImageBitmap(bitmap);
-        play_bg.setImageBitmap(bitmap);
+        //Bitmap bitmap = getVideoThumbnail(videoPath);
+        //mainVideoImageView.setImageBitmap(bitmap);
+        //play_bg.setImageBitmap(bitmap);
+
+        //异步加载
+        if(null != mainVideoModel){
+            List<ImageView> list = new LinkedList<>();
+            list.add(mainVideoImageView);
+            list.add(play_bg);
+            VideoFaceImageUtil.getVideoThumbnailFFmpeg(this,videoPath,mainVideoModel,list);
+        }
 
     }
 

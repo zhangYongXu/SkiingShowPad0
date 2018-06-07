@@ -30,8 +30,10 @@ import java.util.concurrent.Executors;
 
 import cn.geeksworld.skiingshow.R;
 import cn.geeksworld.skiingshow.Tools.ShareKey;
+import cn.geeksworld.skiingshow.Tools.VideoFaceImageUtil;
 import cn.geeksworld.skiingshow.model.SkiingModel;
 import cn.geeksworld.skiingshow.model.VideoModel;
+import wseemann.media.FFmpegMediaMetadataRetriever;
 
 /**
  * Created by xhs on 2018/3/30.
@@ -41,12 +43,12 @@ import cn.geeksworld.skiingshow.model.VideoModel;
 
 public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
 
-    private MediaMetadataRetriever media;
 
     private SkiingModel skiingModel;
 
     List<VideoModel> list;//存放数据
     Context context;
+    Activity activity;
 
     private final DisplayMetrics metrics;
 
@@ -60,23 +62,16 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
         mItemClickListener = itemClickListener;
     }
 
-    public RecyclerViewVideoItemAdapter(Context _context,List<VideoModel> _list,SkiingModel _skiingModel) {
-        media = new MediaMetadataRetriever();
+    public RecyclerViewVideoItemAdapter(Context _context,Activity _activity,List<VideoModel> _list,SkiingModel _skiingModel) {
+
         this.list = _list;
         this.context = _context;
+        this.activity = _activity;
         this.skiingModel = _skiingModel;
 
         metrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-
-//        for(VideoModel videoModel : list){
-//            getVideoThumbnail(getCurrentVideoPath(videoModel),videoModel,null);
-//        }
-
-
-
-        Log.i("ee","ss");
     }
 
     @Override
@@ -125,11 +120,9 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
             imageView.setImageBitmap(videoModel.bitmap);
             return;
         }
-           String videoPath = getCurrentVideoPath(videoModel);
-            getVideoThumbnail(videoPath,videoModel,imageView);
 
-//        AsyncTaskDataLoad asyncTaskDataLoad = new AsyncTaskDataLoad(videoModel,imageView,videoPath);
-//        asyncTaskDataLoad.execute();
+        String videoPath = getCurrentVideoPath(videoModel);
+        getVideoThumbnail(videoPath,videoModel,imageView);
 
         //测试
         if(ShareKey.TestImageAndVideo){
@@ -155,28 +148,12 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
         }
     }
     public void getVideoThumbnail(final String videoPath, final VideoModel videoModel,final ImageView imageView) {
-        try {
-            Uri uri = uriWithFilePath(videoPath);
-            media.setDataSource(context,uri);
-            Bitmap bitmap = media.getFrameAtTime(0,MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
-            videoModel.bitmap = bitmap;
-
-            if(null != imageView){
-                imageView.setImageBitmap(bitmap);
-            }
-            Log.i("ee","");
-        }catch (IllegalArgumentException e){
-            e.printStackTrace();
-            Log.i("IllegalArgException",e.toString());
-        }catch (Exception e){
-            e.printStackTrace();
-            Log.i("Exception",e.toString());
-        }
-
+        VideoFaceImageUtil.getVideoThumbnailFFmpeg(activity,videoPath,videoModel,imageView);
     }
 
     public Bitmap getVideoThumbnail(final String videoPath) {
         try {
+            MediaMetadataRetriever media = new MediaMetadataRetriever();
             Uri uri = uriWithFilePath(videoPath);
             media.setDataSource(context,uri);
             Bitmap bitmap = media.getFrameAtTime(0,MediaMetadataRetriever.OPTION_CLOSEST_SYNC);

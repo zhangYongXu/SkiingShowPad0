@@ -1,5 +1,6 @@
 package cn.geeksworld.skiingshow.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -8,6 +9,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,7 @@ import cn.geeksworld.skiingshow.Tools.ShareKey;
 import cn.geeksworld.skiingshow.model.SkiingModel;
 import cn.geeksworld.skiingshow.model.VideoModel;
 import cn.geeksworld.skiingshow.R;
+import wseemann.media.FFmpegMediaMetadataRetriever;
 
 /**
  * Created by xhs on 2018/3/19.
@@ -36,12 +40,14 @@ public class MyGridViewAdapter extends BaseAdapter {
     private SkiingModel skiingModel;
     private String localCommonDirPath;
 
+    Activity activity;
     Context context;
     List<VideoModel> list;
 
-    public MyGridViewAdapter(Context _context, List<VideoModel> _list,SkiingModel _skiingModel) {
+    public MyGridViewAdapter(Context _context,Activity _activity, List<VideoModel> _list,SkiingModel _skiingModel) {
         this.list = _list;
         this.context = _context;
+        this.activity = _activity;
         this.skiingModel = _skiingModel;
         localCommonDirPath = skiingModel.getLocalCommonDirPath() + "videoDetailJson/item"+skiingModel.getOrderNum()+"/";
 
@@ -85,51 +91,18 @@ public class MyGridViewAdapter extends BaseAdapter {
 
         showImageView = (ImageView)convertView.findViewById(R.id.detailItemImageView);
         titleTextView = (TextView)convertView.findViewById(R.id.detailItemTextView);
-        titleTextView.setText(list.get(i).getVideoTitle());
-        /*
-        try {
-            String namePath = localCommonDirPath + list.get(i).getLocalCommonFaceImagePath();
-            // get input stream
-            InputStream ims = viewGroup.getContext().getAssets().open(namePath);
-            // load image as Drawable
-            Drawable d = Drawable.createFromStream(ims, null);
-            // set image to ImageView
-            showImageView.setImageDrawable(d);
-        }
-        catch(IOException ex) {
 
-        }
-        */
+        VideoModel videoModel = list.get(i);
 
+        titleTextView.setText(videoModel.getVideoTitle());
 
-        /*
-        Bitmap bitmap = null;
-        try {
-            String namePath = localCommonDirPath + list.get(i).getLocalCommonFaceImagePath();
-            // get input stream
-            InputStream is = viewGroup.getContext().getAssets().open(namePath);
+        //showCurrentFaceImageFromVideo(showImageView,list.get(i));
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            //更改颜色方案以减少内存使用(rgb_565),
-            options.inPreferredConfig = Bitmap.Config.RGB_565;
-
-            //解析得到图片
-            bitmap = BitmapFactory.decodeStream(is,null,options);
-            //关闭数据流
-
-            showImageView.setImageBitmap(bitmap);
-            is.close();
-
-        }catch(IOException ex) {
-
-        }
-        */
-        showCurrentFaceImageFromVideo(showImageView,list.get(i));
-
-        /*
-        Uri videoUri = uriWithFileName(getFileNameNoEx(list.get(i).getVideoName()));
-        Drawable drawable = getThumbnail(videoUri);
-        */
+        String videoPath = getCurrentVideoPath(videoModel);
+//        AsyncTaskDataLoad asyncTaskDataLoad  = new AsyncTaskDataLoad(list.get(i),showImageView,videoPath);
+//        asyncTaskDataLoad.execute();
+        Bitmap bitmap = getVideoThumbnailFFmpeg(videoPath,videoModel,showImageView);
+        showImageView.setImageBitmap(bitmap);
 
         return convertView;
     }
@@ -154,6 +127,50 @@ public class MyGridViewAdapter extends BaseAdapter {
         }catch (IllegalArgumentException e){
             Log.i("exception  xx","");
         }
+        return null;
+    }
+    private Bitmap getVideoThumbnailFFmpeg(final String videoPath,final VideoModel videoModel,final ImageView imageView) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                FFmpegMediaMetadataRetriever mm = new FFmpegMediaMetadataRetriever();
+                Bitmap bitmap = null;
+                try {
+                    //获取视频文件数据
+                    mm.setDataSource(videoPath);
+                    //获取文件缩略图
+                    bitmap = mm.getFrameAtTime();
+                    videoModel.bitmap = bitmap;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            imageView.setImageBitmap(videoModel.bitmap);
+                        }
+                    });
+                    Log.i("","");
+                } catch (Exception e) {
+                    Log.i("", "");
+                } finally {
+                    mm.release();
+                }
+            }
+        }).start();
+        /*
+        FFmpegMediaMetadataRetriever mm = new FFmpegMediaMetadataRetriever();
+        Bitmap bitmap = null;
+        try {
+            //获取视频文件数据
+            mm.setDataSource(videoPath);
+            //获取文件缩略图
+            bitmap = mm.getFrameAtTime();
+        } catch (Exception e) {
+            Log.i("", "");
+        } finally {
+            mm.release();
+        }
+        return bitmap;
+        */
         return null;
     }
     //获取当前视频路径

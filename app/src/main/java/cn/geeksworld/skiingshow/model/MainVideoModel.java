@@ -1,5 +1,7 @@
 package cn.geeksworld.skiingshow.model;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by xhs on 2018/4/25.
  */
@@ -10,6 +12,8 @@ public class MainVideoModel {
     private String videoName;
 
     private String localCommonVideoSDPath;
+
+    public Bitmap bitmap;
 
     public void setVideoTitle(String videoTitle) {
         this.videoTitle = videoTitle;
