@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@mipmap/activity_list_bg"
-            android:layout_marginBottom="90dp">
+            android:layout_marginBottom="@dimen/appBottomNavigationViewHeightXLarge">
 
             <TextView
                 android:id="@+id/listTypeTextView"

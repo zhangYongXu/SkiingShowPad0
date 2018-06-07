@@ -102,7 +102,7 @@ public class ListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(ListActivity.this,DetailActivity.class);
+                Intent intent=new Intent(ListActivity.this,DetailActivity2.class);
                 SkiingModel skingModel = (SkiingModel)adapterView.getAdapter().getItem(i);
                 intent.putExtra("skiingModel",skingModel);
                 startActivity(intent);

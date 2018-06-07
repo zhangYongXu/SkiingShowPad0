@@ -50,6 +50,7 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
 
     private final DisplayMetrics metrics;
 
+
     public interface OnItemClickListener{
         void onItemClick(int position);
     }
@@ -68,9 +69,14 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
         metrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        for(VideoModel videoModel : list){
-            getVideoThumbnail(getCurrentVideoPath(videoModel),videoModel,null);
-        }
+
+//        for(VideoModel videoModel : list){
+//            getVideoThumbnail(getCurrentVideoPath(videoModel),videoModel,null);
+//        }
+
+
+
+        Log.i("ee","ss");
     }
 
     @Override
@@ -114,13 +120,16 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
         showCurrentFaceImageFromVideo(fragHolder.detailItemImageView,videoModel);
     }
 
-    private void showCurrentFaceImageFromVideo(ImageView imageView,VideoModel videoModel){
+    private void showCurrentFaceImageFromVideo(final ImageView imageView,final VideoModel videoModel){
         if(null != videoModel.bitmap){
             imageView.setImageBitmap(videoModel.bitmap);
             return;
         }
-        String videoPath = getCurrentVideoPath(videoModel);
-        getVideoThumbnail(videoPath,videoModel,imageView);
+           String videoPath = getCurrentVideoPath(videoModel);
+            getVideoThumbnail(videoPath,videoModel,imageView);
+
+//        AsyncTaskDataLoad asyncTaskDataLoad = new AsyncTaskDataLoad(videoModel,imageView,videoPath);
+//        asyncTaskDataLoad.execute();
 
         //测试
         if(ShareKey.TestImageAndVideo){
@@ -151,6 +160,7 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
             media.setDataSource(context,uri);
             Bitmap bitmap = media.getFrameAtTime(0,MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
             videoModel.bitmap = bitmap;
+
             if(null != imageView){
                 imageView.setImageBitmap(bitmap);
             }
@@ -163,6 +173,23 @@ public class RecyclerViewVideoItemAdapter extends RecyclerView.Adapter {
             Log.i("Exception",e.toString());
         }
 
+    }
+
+    public Bitmap getVideoThumbnail(final String videoPath) {
+        try {
+            Uri uri = uriWithFilePath(videoPath);
+            media.setDataSource(context,uri);
+            Bitmap bitmap = media.getFrameAtTime(0,MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+            Log.i("eess","");
+            return bitmap;
+        }catch (IllegalArgumentException e){
+            e.printStackTrace();
+            Log.i("IllegalArgException",e.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.i("Exception",e.toString());
+        }
+        return null;
     }
 
     //要显示的子项数量

@@ -45,11 +45,18 @@
 
         </activity>
 
+        <activity android:name="cn.geeksworld.skiingshow.activity.DetailActivity2" android:screenOrientation="portrait">
+
+        </activity>
+
         <activity android:name="cn.geeksworld.skiingshow.activity.MoreVideoActivity" android:screenOrientation="portrait">
 
         </activity>
 
         <activity android:name="cn.geeksworld.skiingshow.activity.MoreVideoPlayActivity" android:configChanges="orientation|keyboard|layoutDirection|screenSize">
+
+        </activity>
+        <activity android:name="cn.geeksworld.skiingshow.activity.MoreVideoPlayActivityT" android:configChanges="orientation|keyboard|layoutDirection|screenSize">
 
         </activity>
     </application>

@@ -5,14 +5,10 @@ import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,10 +18,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,23 +27,18 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONPObject;
 
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import cn.geeksworld.skiingshow.R;
 import cn.geeksworld.skiingshow.Tools.AppModelControlManager;
@@ -68,7 +56,7 @@ import cn.geeksworld.skiingshow.views.SimpleVideoView;
  * Created by xhs on 2018/3/15.
  */
 
-public class DetailActivity extends AppCompatActivity{
+public class DetailActivity2 extends AppCompatActivity{
 
     private DisplayMetrics outMetrics;
     private SimpleVideoView videoView;
@@ -89,11 +77,9 @@ public class DetailActivity extends AppCompatActivity{
     private List<VideoModel> zqVideoList = new ArrayList<VideoModel>();
     private VideoModel currentVideoModel;
 
-    private RecyclerView zhengQueRecycleView;
-    private RecyclerViewVideoItemAdapter zhengQueItemAdapter;
+    private GridView gridView;
 
-    private RecyclerView cuoWuRecycleView;
-    private RecyclerViewVideoItemAdapter cuoWuItemAdapter;
+    private MyGridViewAdapter gridViewAdapter;
 
 
 
@@ -118,35 +104,31 @@ public class DetailActivity extends AppCompatActivity{
     private ScrollView leftBtnContentRightScrollView;
     private ScrollView rightBtnContentRightScrollView;
 
-    static ExecutorService fixedThreadPool;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         AppModelControlManager.hiddenSystemHandleView(this);
 
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_detail2);
 
         initNavigationView();
 
         initData();
 
-        //loadData();
+        loadData();
 
         initView();
 
-        initRecycleView();
+        initGridView();
 
-        asyncloadData();
+        setFoldTextView();
 
-//        setFoldTextView();
-//
-//        showCurrentFaceImage();
-//
-//        showMainVideoFaceImageFromVideo();
-//
-//        prepareVideo();
+        showCurrentFaceImage();
+
+        showMainVideoFaceImageFromVideo();
+
+        prepareVideo();
 
 
     }
@@ -217,9 +199,7 @@ public class DetailActivity extends AppCompatActivity{
         play_bg = videoView.findViewById(R.id.play_bg);
         videoContainer = (RelativeLayout) findViewById(R.id.videoContainer);
 
-        zhengQueRecycleView = (RecyclerView)findViewById(R.id.zhengQueRecycleView);
-
-        cuoWuRecycleView = (RecyclerView)findViewById(R.id.cuoWuRecycleView);
+        gridView = (GridView)findViewById(R.id.grid);
 
 
 
@@ -308,48 +288,25 @@ public class DetailActivity extends AppCompatActivity{
         });
     }
 
-    private void initRecycleView(){
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);//设置水平滚动
-        zhengQueRecycleView.setLayoutManager(linearLayoutManager);//这里用线性显示 类似于listview
+    private void initGridView(){
+        int size = zqVideoList.size();
+        int length = 140;
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density;
+        int gridviewWidth = (int) (size * (length + 10) * density);
+        int itemWidth = (int) (length * density);
 
-        zhengQueRecycleView.setFocusableInTouchMode(false);
-        zhengQueRecycleView.requestFocus();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
+        gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        gridView.setColumnWidth(itemWidth); // 设置列表项宽
+        gridView.setHorizontalSpacing(5); // 设置列表项水平间距
+        gridView.setStretchMode(GridView.NO_STRETCH);
+        gridView.setNumColumns(size); // 设置列数量=列表集合数
 
-        zhengQueItemAdapter = new RecyclerViewVideoItemAdapter(this,zqVideoList,skiingModel);
-
-        zhengQueItemAdapter.setItemClickListener(new RecyclerViewVideoItemAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                VideoModel videoModel  = (VideoModel) zqVideoList.get(position);
-                currentVideoModel = videoModel;
-                selectVideoHandle();
-            }
-        });
-        zhengQueRecycleView.setAdapter(zhengQueItemAdapter);
-        zhengQueItemAdapter.notifyDataSetChanged();
-
-
-        linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);//设置水平滚动
-        cuoWuRecycleView.setLayoutManager(linearLayoutManager);//这里用线性显示 类似于listview
-
-        cuoWuRecycleView.setFocusableInTouchMode(false);
-        cuoWuRecycleView.requestFocus();
-
-        cuoWuItemAdapter = new RecyclerViewVideoItemAdapter(this,cwVideoList,skiingModel);
-
-        cuoWuItemAdapter.setItemClickListener(new RecyclerViewVideoItemAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                VideoModel videoModel  = (VideoModel) cwVideoList.get(position);
-                currentVideoModel = videoModel;
-                selectVideoHandle();
-            }
-        });
-        cuoWuRecycleView.setAdapter(cuoWuItemAdapter);
-
-        cuoWuItemAdapter.notifyDataSetChanged();
+        gridViewAdapter= new MyGridViewAdapter(this, zqVideoList,skiingModel);
+        gridView.setAdapter(gridViewAdapter);
     }
 
     private void selectedFoldInfoLeftBgImageView(){
@@ -380,33 +337,7 @@ public class DetailActivity extends AppCompatActivity{
 
     }
 
-    private void asyncloadData(){
-        final Handler handler = new Handler();
-        if (fixedThreadPool == null) {
-            fixedThreadPool = Executors.newFixedThreadPool(4);
-        }
-        fixedThreadPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                loadData();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        zhengQueItemAdapter.notifyDataSetChanged();
-                        cuoWuItemAdapter.notifyDataSetChanged();
 
-                        setFoldTextView();
-
-                        showCurrentFaceImage();
-
-                        showMainVideoFaceImageFromVideo();
-
-                        prepareVideo();
-                    }
-                });
-            }
-        });
-    }
 
     private void loadData(){
         String  zqJsonString = getJson(this,skiingModel.getVideoZhengJueJsonFilePath());
@@ -417,8 +348,7 @@ public class DetailActivity extends AppCompatActivity{
         if(null != zqJsonString && !zqJsonString.isEmpty() && !zqJsonString.equals("")){
             JSONArray zqJsonObj = (JSONArray) JSONArray.parse(zqJsonString);
             List<VideoModel> zqDatas = JSONArray.parseArray(Tool.parseJson(zqJsonObj), VideoModel.class);
-            zqVideoList.clear();
-            zqVideoList.addAll(zqDatas);
+            zqVideoList = zqDatas;
         }
 
 
@@ -426,8 +356,7 @@ public class DetailActivity extends AppCompatActivity{
         if(null != cwJsonString && !cwJsonString.isEmpty() && !cwJsonString.equals("")) {
             JSONArray cuJsonObj = (JSONArray) JSONArray.parse(cwJsonString);
             List<VideoModel> cuDatas = JSONArray.parseArray(Tool.parseJson(cuJsonObj), VideoModel.class);
-            cwVideoList.clear();
-            cwVideoList.addAll(cuDatas);
+            cwVideoList = cuDatas;
         }
 
 
@@ -441,6 +370,7 @@ public class DetailActivity extends AppCompatActivity{
 
             }
         }
+
     }
 
     private void showCurrentFaceImage(){
@@ -647,16 +577,14 @@ public class DetailActivity extends AppCompatActivity{
 
         mainVideoImageView.setVisibility(View.VISIBLE);
 
-        zhengQueRecycleView.setVisibility(View.VISIBLE);
-        cuoWuRecycleView.setVisibility(View.GONE);
+        gridView.setVisibility(View.VISIBLE);
     }
     public void typeCuoWuBtnClcked(View view){
         typeBgImageView.setImageResource(R.mipmap.detail_type_bg_red);
 
         mainVideoImageView.setVisibility(View.GONE);
 
-        zhengQueRecycleView.setVisibility(View.GONE);
-        cuoWuRecycleView.setVisibility(View.VISIBLE);
+        gridView.setVisibility(View.GONE);
     }
 
     public void backButtonClicked(View view){

@@ -5,10 +5,8 @@ package cn.geeksworld.skiingshow.views;
  */
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -29,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,19 +36,17 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
-import java.lang.reflect.Field;
-
 import cn.geeksworld.skiingshow.R;
-import cn.geeksworld.skiingshow.Tools.NetWorkUtils;
 import cn.geeksworld.skiingshow.Tools.Tool;
 import cn.geeksworld.skiingshow.activity.DetailActivity;
+import cn.geeksworld.skiingshow.activity.MoreVideoActivity;
+import cn.geeksworld.skiingshow.activity.MoreVideoPlayActivity;
 //import com.xhs.sc.activity.Page1VideoPlayAc;
 //import com.xhs.sc.activity.Page2VideoPlayAc;
 
-public class SimpleVideoView extends RelativeLayout implements OnClickListener {
+public class Simple2VideoView extends RelativeLayout implements OnClickListener {
 
     private Context context;
     private View mView;
@@ -97,17 +94,17 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
     private ImageView light_icon;
 
     private  TextView TipTextView;
-    public SimpleVideoView(Context context) {
+    public Simple2VideoView(Context context) {
         super(context);
         init(context, null, 0);
     }
 
-    public SimpleVideoView(Context context, AttributeSet attrs) {
+    public Simple2VideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs, 0);
     }
 
-    public SimpleVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Simple2VideoView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
@@ -134,7 +131,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
     //初始化控件
     private void init(final Context context, AttributeSet attrs, int defStyleAttr) {
         this.context = context;
-        mView = LayoutInflater.from(context).inflate(R.layout.simple_video_view, this);
+        mView = LayoutInflater.from(context).inflate(R.layout.simple_video2_view, this);
         mBigPlayBtn = mView.findViewById(R.id.big_play_button);
         mBigPauseBtn = mView.findViewById(R.id.big_pase_button);
         play_bg = mView.findViewById(R.id.play_bg);
@@ -151,7 +148,8 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
         //获取屏幕大小
         ((Activity) context).getWindowManager().getDefaultDisplay().getSize(screenSize);
 
-        //设置控制面板初始不可见
+
+        //设置控制面板初始可见
         mControlPanel.setVisibility(View.VISIBLE);
 
 
@@ -524,6 +522,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
         mPlayBtn.setOnClickListener(this);
         mFullScreenBtn.setOnClickListener(this);
 
+
         mControlPanel.setVisibility(VISIBLE);
 
         //进度条进度改变监听器
@@ -552,6 +551,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
 
     //整个被点击时处理
     private void mviewClickedHandle(){
+
         //播放/暂停按钮
         if (mVideoView.isPlaying()) {
             mVideoView.pause();
@@ -561,7 +561,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
 
             mControlPanel.setVisibility(View.VISIBLE);
 
-        }else {
+        } else {
             playFromPauseState();
             mControlPanel.setVisibility(View.GONE);
         }
@@ -587,13 +587,12 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                 mPlayBtn.setSelected(false);
                 mBigPlayBtn.setVisibility(VISIBLE);
                 mBigPauseBtn.setVisibility(INVISIBLE);
-
                 mControlPanel.setVisibility(View.VISIBLE);
             } else {
                 playFromPauseState();
                 mControlPanel.setVisibility(View.GONE);
             }
-
+            //sendHideControlPanelMessage();
         } else if (v.getId() == R.id.full_screen_button) {
             //全屏
             if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -603,7 +602,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                 screenWidth = metrics.widthPixels;
                 setIsFullScreen(false);
             }
-            sendHideControlPanelMessage();
+            //sendHideControlPanelMessage();
         }
     }
 
@@ -628,7 +627,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
     }
 
     //从暂停状态播放
-    private void playFromPauseState()  {
+    private void playFromPauseState() {
         if (mUpdateThread == null || !mUpdateThread.isAlive()) {
             //开始更新进度线程
             mUpdateThread = new Thread(mUpdateTask);
@@ -636,10 +635,13 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
             mUpdateThread.start();
         }
         mVideoView.start();
+        play_bg.setVisibility(View.GONE);
         mPlayBtn.setSelected(true);
         mBigPlayBtn.setVisibility(GONE);
         mBigPauseBtn.setVisibility(INVISIBLE);
     }
+
+
 
     //设置当前时间
     private void setPlayTime(int millisSecond) {
@@ -743,6 +745,8 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
 //        } else
         if (context instanceof DetailActivity) {
             ((DetailActivity) context).video_full(mIsFullScreen);
+        }else if(context instanceof MoreVideoPlayActivity){
+            ((MoreVideoPlayActivity) context).video_full(mIsFullScreen);
         }
 //        setSize();
     }
