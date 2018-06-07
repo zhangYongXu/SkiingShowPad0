@@ -3,275 +3,285 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <include
+        android:id="@+id/inTitle"
+        layout="@layout/layout_top_navigation" />
     <RelativeLayout
+        android:id="@+id/contentVideoContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9">
-        <include
-            android:id="@+id/inTitle"
-            layout="@layout/layout_top_navigation" />
+        android:layout_height="wrap_content"
+        android:background="@color/black">
         <RelativeLayout
             android:id="@+id/videoContainer"
             android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:layout_below="@id/inTitle">
+            android:layout_height="450dp">
 
             <cn.geeksworld.skiingshow.views.SimpleVideoView
                 android:id="@+id/videoView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_margin="0dp"
-                android:padding="0dp" />
+                android:layout_centerInParent="true" />
         </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/listLayout"
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/listLayout"
+        android:layout_width="match_parent"
+        android:layout_height="220dp">
+        <ImageView
+            android:id="@+id/detailTypeBgImageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_below="@+id/videoContainer">
-            <ImageView
-                android:id="@+id/detailTypeBgImageView"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@mipmap/detail_type_bg_blue"
-                android:scaleType="fitXY" />
-            <LinearLayout
-                android:id="@+id/typeButtonLayout"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:orientation="horizontal"
-                android:background="@color/white"
-                android:paddingBottom="2dp">
-                <ImageButton
-                    android:id="@+id/typeZhengQueImageButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:src="@mipmap/detail_type_button_blue"
-                    android:scaleType="fitXY"
-                    android:background="#00000000"
-                    android:onClick="typeZhengQueBtnClcked"
-                    android:paddingRight="1dp"/>
-                <ImageButton
-                    android:id="@+id/typeCuoWuImageButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:src="@mipmap/detail_type_button_red"
-                    android:scaleType="fitXY"
-                    android:background="#00000000"
-                    android:onClick="typeCuoWuBtnClcked"
-                    android:paddingLeft="1dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/typeButtonTextLayout"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:orientation="horizontal">
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:text="动作教学"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/textSize16" />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_centerHorizontal="true"
-                        android:text="错误动作"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/textSize16" />
-                </RelativeLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@+id/typeButtonLayout">
-                <ImageView
-                    android:id="@+id/mainVideoImageView"
-                    android:layout_width="170dp"
-                    android:layout_height="97dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:scaleType="fitStart" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp" >
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/zhengQueRecycleView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/cuoWuRecycleView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"/>
-                </RelativeLayout>
-            </LinearLayout>
-        </RelativeLayout>
+            android:src="@mipmap/detail_type_bg_blue"
+            android:scaleType="fitXY" />
         <LinearLayout
-            android:id="@+id/infoButtonTextLayout"
+            android:id="@+id/typeButtonLayout"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/listLayout"
+            android:layout_height="45dp"
             android:orientation="horizontal"
-            android:background="@color/white">
-            <RelativeLayout
+            android:background="@color/white"
+            android:paddingBottom="4dp">
+            <ImageButton
+                android:id="@+id/typeZhengQueImageButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
-                android:paddingRight="1dp">
-                <ImageView
-                    android:id="@+id/foldInfoLeftBgImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/activity_detial_fold_type_btn_selected_bg_color"/>
+                android:src="@mipmap/detail_type_button_blue"
+                android:scaleType="fitXY"
+                android:background="#00000000"
+                android:onClick="typeZhengQueBtnClcked"
+                android:paddingRight="2dp"/>
+            <ImageButton
+                android:id="@+id/typeCuoWuImageButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:src="@mipmap/detail_type_button_red"
+                android:scaleType="fitXY"
+                android:background="#00000000"
+                android:onClick="typeCuoWuBtnClcked"
+                android:paddingLeft="2dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/typeButtonTextLayout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp">
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
-                    android:text="课程简介"
+                    android:text="动作教学"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize18" />
+                    android:textSize="@dimen/textSize30"
+                    android:paddingBottom="2dp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3">
-                <ImageView
-                    android:id="@+id/foldInfoRightBgImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/activity_detial_fold_type_btn_normal_bg_color"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
-                    android:text="练习动作要领"
+                    android:text="错误动作"
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize18" />
+                    android:textSize="@dimen/textSize30"
+                    android:paddingBottom="2dp"/>
             </RelativeLayout>
         </LinearLayout>
-        <ScrollView
-            android:id="@+id/leftBtnContentRightScrollView"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/infoButtonTextLayout">
-            <TextView
-                android:id="@+id/fold1TextView"
-                android:layout_below="@+id/fold1ImageView"
-                android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/typeButtonLayout">
+            <ImageView
+                android:id="@+id/mainVideoImageView"
+                android:layout_width="250dp"
+                android:layout_height="140.625dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@mipmap/mine_head_bg"
+                android:scaleType="fitXY"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:lineSpacingExtra="5dp" />
-        </ScrollView>
-        <ScrollView
-            android:id="@+id/rightBtnContentRightScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/infoButtonTextLayout"
-            android:visibility="invisible">
-            <TextView
-                android:id="@+id/fold2TextView"
-                android:layout_below="@+id/fold2ImageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingRight="20dp"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:lineSpacingExtra="5dp" />
-        </ScrollView>
+                android:layout_margin="10dp" >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/zhengQueRecycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/cuoWuRecycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true">
-            <ImageView
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:src="@mipmap/activity_detail_logo"
+            android:layout_marginBottom="130dp">
+            <LinearLayout
+                android:id="@+id/infoButtonTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:background="@color/white">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:paddingRight="2dp">
+                    <ImageView
+                        android:id="@+id/foldInfoLeftBgImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/activity_detial_fold_type_btn_selected_bg_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="课程简介"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize30" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:paddingLeft="2dp">
+                    <ImageView
+                        android:id="@+id/foldInfoRightBgImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/activity_detial_fold_type_btn_normal_bg_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="练习动作要领"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize30" />
+                </RelativeLayout>
+            </LinearLayout>
+            <ScrollView
+                android:id="@+id/leftBtnContentRightScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/infoButtonTextLayout">
+                <TextView
+                    android:id="@+id/fold1TextView"
+                    android:layout_below="@+id/fold1ImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="30dp"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="30dp"
+                    android:textSize="@dimen/textSize25"
+                    android:lineSpacingExtra="10dp" />
+            </ScrollView>
+            <ScrollView
+                android:id="@+id/rightBtnContentRightScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/infoButtonTextLayout"
+                android:visibility="invisible">
+                <TextView
+                    android:id="@+id/fold2TextView"
+                    android:layout_below="@+id/fold2ImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="30dp"
+                    android:paddingLeft="30dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="30dp"
+                    android:textSize="@dimen/textSize25"
+                    android:lineSpacingExtra="10dp" />
+            </ScrollView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true">
+                <ImageView
+                    android:layout_width="400dp"
+                    android:layout_height="200dp"
+                    android:src="@mipmap/activity_detail_logo"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
         </RelativeLayout>
-
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/otherLayout"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_above="@+id/bottomBackLayout"
-        android:layout_marginBottom="5dp">
-        <ImageView
+        <RelativeLayout
+            android:id="@+id/otherLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@mipmap/activity_detial_other_bg"
-            android:scaleType="fitXY"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:scaleType="center"
-            android:src="@mipmap/detail_arrow_up"/>
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/bottomBackLayout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true">
-        <ImageView
+            android:layout_height="50dp"
+            android:layout_above="@+id/bottomBackLayout"
+            android:layout_marginBottom="10dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/activity_detial_other_bg"
+                android:scaleType="fitXY"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/detail_arrow_up"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/bottomBackLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/appBottomNavigationViewHeightXLarge"
             android:layout_alignParentBottom="true"
-            android:src="@mipmap/activity_bottom_back_bg"
-            android:scaleType="fitXY"/>
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/list_back_button"
-            android:onClick="backButtonClicked"
-            android:background="#00000000"/>
-        <cn.geeksworld.skiingshow.views.LongTouchBtn
-            android:id="@+id/appControlBarBtn"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:background="#00000000"
-            android:onClick="appControlBarBtnClicked" />
+            android:layout_alignParentLeft="true">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/appBottomNavigationViewHeightXLarge"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="0dp"
+                android:src="@mipmap/activity_bottom_back_bg"
+                android:scaleType="fitXY" />
+            <ImageButton
+                android:layout_width="@dimen/appBottomNavigationViewHeightXLarge"
+                android:layout_height="@dimen/appBottomNavigationViewHeightXLarge"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+
+                android:scaleType="fitXY"
+                android:src="@drawable/list_back_button"
+                android:onClick="backButtonClicked"
+                android:background="#00000000"/>
+            <cn.geeksworld.skiingshow.views.LongTouchBtn
+                android:id="@+id/appControlBarBtn"
+                android:layout_width="@dimen/appBottomNavigationViewHeightXLarge"
+                android:layout_height="@dimen/appBottomNavigationViewHeightXLarge"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:background="#00000000"
+                android:onClick="appControlBarBtnClicked" />
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

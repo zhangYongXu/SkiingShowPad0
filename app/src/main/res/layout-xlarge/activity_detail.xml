@@ -7,8 +7,10 @@
         android:id="@+id/inTitle"
         layout="@layout/layout_top_navigation" />
     <RelativeLayout
+        android:id="@+id/contentVideoContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/black">
         <RelativeLayout
             android:id="@+id/videoContainer"
             android:layout_width="match_parent"
@@ -34,7 +36,7 @@
         <LinearLayout
             android:id="@+id/typeButtonLayout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:background="@color/white"
             android:paddingBottom="4dp">
@@ -62,7 +64,7 @@
         <LinearLayout
             android:id="@+id/typeButtonTextLayout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:paddingBottom="4dp">
             <RelativeLayout

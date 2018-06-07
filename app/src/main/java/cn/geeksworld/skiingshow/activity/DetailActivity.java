@@ -3,6 +3,7 @@ package cn.geeksworld.skiingshow.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -74,9 +75,13 @@ public class DetailActivity extends AppCompatActivity{
 
     private DisplayMetrics outMetrics;
     private SimpleVideoView videoView;
+    private RelativeLayout contentVideoContainer;
     private RelativeLayout videoContainer;
     private RelativeLayout.LayoutParams params_landscape;
     private RelativeLayout.LayoutParams params_portrait;
+
+    private LinearLayout.LayoutParams params_c_landscape;
+    private LinearLayout.LayoutParams params_c_portrait;
     private ImageView play_bg;
     private AppCompatActivity mActivity;
 
@@ -120,6 +125,8 @@ public class DetailActivity extends AppCompatActivity{
     private ScrollView leftBtnContentRightScrollView;
     private ScrollView rightBtnContentRightScrollView;
 
+    private View inTitle;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,34 +140,20 @@ public class DetailActivity extends AppCompatActivity{
 
         initData();
 
-        //loadData();
-
         initView();
 
         initRecycleView();
 
-        //asyncloadData();
-        //threadLoadData();
 
         threadLoadMainVideoData();
-
         threadLoadZQVideoData();
-
         threadLoadCWVideoData();
-
-//        setFoldTextView();
-//
-//        showCurrentFaceImage();
-//
-//        showMainVideoFaceImageFromVideo();
-//
-//        prepareVideo();
 
 
     }
     //导航设置
     private void initNavigationView(){
-        View inTitle = findViewById(R.id.inTitle);
+        inTitle = findViewById(R.id.inTitle);
         inTitle.findViewById(R.id.title_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,10 +203,15 @@ public class DetailActivity extends AppCompatActivity{
 
         params_portrait = new RelativeLayout.LayoutParams(outMetrics.widthPixels, (int)(outMetrics.widthPixels * (9 / 16.0)));
 
+
+
         params_landscape = new RelativeLayout.LayoutParams(outMetrics.heightPixels, (int)(outMetrics.heightPixels * (9 / 16.0)));
         params_landscape.addRule(RelativeLayout.CENTER_IN_PARENT);
         params_landscape.addRule(RelativeLayout.CENTER_VERTICAL);
         params_landscape.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+        params_c_portrait = new LinearLayout.LayoutParams(outMetrics.widthPixels, (int)(outMetrics.widthPixels * (9 / 16.0)));
+        params_c_landscape = new LinearLayout.LayoutParams(outMetrics.heightPixels, outMetrics.widthPixels);
     }
     /**
      * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
@@ -223,6 +221,8 @@ public class DetailActivity extends AppCompatActivity{
 
         videoView = (SimpleVideoView) findViewById(R.id.videoView);
         play_bg = videoView.findViewById(R.id.play_bg);
+
+        contentVideoContainer = (RelativeLayout)findViewById(R.id.contentVideoContainer);
         videoContainer = (RelativeLayout) findViewById(R.id.videoContainer);
 
         zhengQueRecycleView = (RecyclerView)findViewById(R.id.zhengQueRecycleView);
@@ -747,12 +747,30 @@ public class DetailActivity extends AppCompatActivity{
     public void video_full(boolean fullScreen) {
         if (fullScreen) {
             //otherContainer.setVisibility(View.GONE);
+            contentVideoContainer.setLayoutParams(params_c_landscape);
             videoContainer.setLayoutParams(params_landscape);
             //videoView.setLayoutParams(params_landscape);
+            inTitle.setVisibility(View.GONE);
         } else {
             //otherContainer.setVisibility(View.VISIBLE);
+            contentVideoContainer.setLayoutParams(params_c_portrait);
             videoContainer.setLayoutParams(params_portrait);
             //videoView.setLayoutParams(params_portrait);
+
+            inTitle.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            video_full(true);
+            // Toast.makeText(getApplicationContext(), "横屏", Toast.LENGTH_SHORT).show();
+        }else{
+            video_full(false);
+            //Toast.makeText(getApplicationContext(), "竖屏", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -613,7 +613,7 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
                 screenWidth = metrics.widthPixels;
                 setIsFullScreen(false);
             }
-            sendHideControlPanelMessage();
+            //sendHideControlPanelMessage();
         }
     }
 
@@ -747,15 +747,6 @@ public class SimpleVideoView extends RelativeLayout implements OnClickListener {
     public void setIsFullScreen(boolean mIsFullScreen) {
         this.mIsFullScreen = mIsFullScreen;
         Tool.setScreenLandscape(context);
-//        if (context instanceof Page1VideoPlayAc) {
-//            ((Page1VideoPlayAc) context).video_full(mIsFullScreen);
-//        } else if (context instanceof Page2VideoPlayAc) {
-//            ((Page2VideoPlayAc) context).video_full(mIsFullScreen);
-//        } else
-        if (context instanceof DetailActivity) {
-            ((DetailActivity) context).video_full(mIsFullScreen);
-        }
-//        setSize();
     }
 
 }
