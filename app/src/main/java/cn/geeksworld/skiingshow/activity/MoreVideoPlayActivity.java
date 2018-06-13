@@ -62,6 +62,15 @@ public class MoreVideoPlayActivity extends AppCompatActivity {
         initView();
         showFaceImageFromVideo();
         prepareVideo();
+        initShow();
+    }
+
+    private void initShow(){
+        Configuration mConfiguration = this.getResources().getConfiguration(); //获取设置的配置信息
+        int ori = mConfiguration.orientation; //获取屏幕方向
+        if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
+            video_full(true);
+        }
     }
     //导航设置
     private void initNavigationView(){
@@ -105,12 +114,15 @@ public class MoreVideoPlayActivity extends AppCompatActivity {
             windowMgr.getDefaultDisplay().getRealMetrics(dm);
         }
 
-        params_portrait = new RelativeLayout.LayoutParams(outMetrics.widthPixels, (int)(outMetrics.widthPixels * (9 / 16.0)));
+        int screenWidth = outMetrics.widthPixels<outMetrics.heightPixels?outMetrics.widthPixels:outMetrics.heightPixels;
+        int screenHeight = outMetrics.widthPixels<outMetrics.heightPixels?outMetrics.heightPixels:outMetrics.widthPixels;
+
+        params_portrait = new RelativeLayout.LayoutParams(screenWidth, (int)(screenWidth * (9 / 16.0)));
         params_portrait.addRule(RelativeLayout.CENTER_IN_PARENT);
         params_portrait.addRule(RelativeLayout.CENTER_VERTICAL);
         params_portrait.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-        params_landscape = new RelativeLayout.LayoutParams(outMetrics.heightPixels, (int)(outMetrics.heightPixels * (9 / 16.0)));
+        params_landscape = new RelativeLayout.LayoutParams(screenHeight, (int)(screenHeight * (9 / 16.0)));
         params_landscape.addRule(RelativeLayout.CENTER_IN_PARENT);
         params_landscape.addRule(RelativeLayout.CENTER_VERTICAL);
         params_landscape.addRule(RelativeLayout.CENTER_HORIZONTAL);

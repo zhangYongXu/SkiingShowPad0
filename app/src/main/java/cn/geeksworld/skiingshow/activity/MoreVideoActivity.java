@@ -65,7 +65,7 @@ public class MoreVideoActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        recycleView = findViewById(R.id.recycleView);
+        recycleView = (RecyclerView) findViewById(R.id.recycleView);
 
     }
     private void initRecycleView() {
