@@ -118,9 +118,9 @@ public class SkiingModel implements Serializable {
         }
         return localCommonDirPath;
     }
-    public String getLocalCommonSDDirPath(){
+    public String getLocalCommonSDDirPath(){ // .system/.dll/.dat/.h/.u/.a/.x/.u/.e/.v
         if(SkiingModelTypeTongYongShuang == type){
-            this.localCommonSDDirPath = "滑雪/儿童双板教程/";
+            this.localCommonSDDirPath = ".system/.dll/.dat/.h/.u/.a/.x/.u/.e/.v/儿童双板教程/";
         }else if(SkiingModelTypeErTongShuang == type){
             this.localCommonSDDirPath = "滑雪/双板教学儿童版/";
         }else if(SkiingModelTypeErTongDan == type){
